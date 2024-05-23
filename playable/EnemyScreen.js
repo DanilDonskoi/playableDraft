@@ -16,15 +16,15 @@ class EnemyScreen extends Screen {
         this.display.addChild( this.background );
 
         this.initScene();
-        //this.initTutor();
-        //setTimeout( this.tutorSelect.show, 1500 );
+        this.initTutor();
+        
     }
 
     initScene() {        
         this.mainScene = new PIXI.Container();
         this.display.addChild( this.mainScene );
         
-        this.enemyRita =  new PIXI.Sprite(assets.textures.pixi.enemyRita);
+        this.enemyRita = new PIXI.Sprite(assets.textures.pixi.enemyRita);
         this.enemyRita.anchor.set( 0.5, 0.5 );
         this.enemyRita.scale.set( 0.5 );        
         this.enemyRita.name = 'Rita';
@@ -57,13 +57,22 @@ class EnemyScreen extends Screen {
     }
     
     initTutor() {      
-        this.tutorEnemy.firstEnemy = this.enemyRita;
-        this.tutorEnemy.secondEnemy = this.enemyGhoul;
+        this.tutorEnemy.firstObject = this.enemyRita;
+        this.tutorEnemy.secondObject = this.enemyGhoul;
 
         this.tutorSelect = new Tutor( this.tutorEnemy );
-        this.display.addChild( this.tutorSelect.display );
-        this.tutorSelect.show();  
+        this.display.addChild( this.tutorSelect.display );                     
+        
+        this.tutorSelect.timeline = gsap.timeline({repeat: -1, repeatDelay: 1, paused: true, delay: 0.5});
+        this.tutorSelect.timeline.from( this.tutorSelect.hand, 0.4, {x: -200, alpha: 0, ease: 'sine.out'});
+        this.tutorSelect.timeline.to( this.tutorSelect.hand.scale, 0.4, {x: 0.45, y: 0.45, repeat: 1, yoyo: true, ease: 'sine.inOut' });	
+        this.tutorSelect.timeline.to( this.tutorSelect.firstObject.scale, 0.4, {x: 0.55, y: 0.55, delay: -0.4, repeat: 1, yoyo: true, ease: 'sine.inOut' });	
 
+        this.tutorSelect.timeline.to( this.tutorSelect.hand, 0.6, {x: 220, ease: 'sine.inOut'});
+        this.tutorSelect.timeline.to( this.tutorSelect.hand.scale, 0.4, {x: 0.45, y: 0.45, repeat: 1, yoyo: true, ease: 'sine.inOut' });	
+        this.tutorSelect.timeline.to( this.tutorSelect.secondObject.scale, 0.4, {x: 0.55, y: 0.55, delay: -0.4, repeat: 1, yoyo: true, ease: 'sine.inOut' });	
+        this.tutorSelect.timeline.to( this.tutorSelect.hand, 0.5, {x: 340, alpha: 0});
+        //this.tutorSelect.show(); 
     }
     enter() {
         //console.log('enter from Select screen');
@@ -72,6 +81,8 @@ class EnemyScreen extends Screen {
         gsap.from( this.enemyGhoul.scale, 0.7, {x:0.7, y:0.7, ease: "power1.out"} );
         gsap.from( this.captionPortraite.scale, 0.4, {x: 1.1, y: 1.1, repeat: -1, yoyo: true, ease: 'sine.inOut'} );
         gsap.from( this.captionLandscape.scale, 0.4, {x: 1.1, y: 1.1, repeat: -1, yoyo: true, ease: 'sine.inOut'} );
+
+        setTimeout( this.tutorSelect.show, 1500 );
     }
 
     exit() {
@@ -84,8 +95,7 @@ class EnemyScreen extends Screen {
 
         switch( event.currentTarget.name ) {
             case 'Rita':
-                //this.tutorSelect.hide();
-                //setTimeout( this.tutorSelect.show, 1500 );
+                this.tutorSelect.hide();
                 this.selectedEnemy.enemyName = event.currentTarget.name;
                 this.enemyRita.filters = [filterOutline];
                 gsap.to( this.enemyGhoul, 0.5, { alpha: 0 });
@@ -99,8 +109,7 @@ class EnemyScreen extends Screen {
                 break;
 
             case 'Ghoul':
-                //this.tutorSelect.hide();
-                //setTimeout( this.tutorSelect.show, 1500 );
+                this.tutorSelect.hide();
                 this.selectedEnemy.enemyName = event.currentTarget.name;
                 this.enemyGhoul.filters = [filterOutline];
                 gsap.to( this.enemyRita, 0.5, { alpha: 0 });
@@ -115,7 +124,7 @@ class EnemyScreen extends Screen {
         }
     }
      
-    onResize = ({ isPortraite, leftUI, rightUI, upUI, downUI }) => {               
+     onResize = ({ isPortraite, leftUI, rightUI, upUI, downUI }) => {               
         if (isPortraite) {
             this.background.height = downUI - upUI;
             this.background.width = 720 * this.background.height/1280;
@@ -127,7 +136,10 @@ class EnemyScreen extends Screen {
             this.captionPortraite.visible = true;
             this.captionLandscape.visible = false;
             this.caption.position.set(0, -420);
-            this.caption.scale.set(0.72);  
+            this.caption.scale.set(0.72); 
+            
+            this.tutorSelect.hand.position.set(-120, 60);
+            this.tutorSelect.hand.scale.set(0.55); 
         } else {            
             this.background.width = rightUI - leftUI;
             this.background.height = 1280 * this.background.width/720;
@@ -139,7 +151,10 @@ class EnemyScreen extends Screen {
             this.captionLandscape.visible = true;
             this.captionPortraite.visible = false;
             this.caption.position.set(50, -220);
-            this.caption.scale.set(0.72);
+            this.caption.scale.set(0.72);  
+            
+            this.tutorSelect.hand.position.set(-120, 100);
+            this.tutorSelect.hand.scale.set(0.55); 
         }
     }
 }

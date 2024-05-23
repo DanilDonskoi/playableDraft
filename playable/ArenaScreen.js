@@ -1,5 +1,6 @@
 class ArenaScreen extends Screen {
-    selectedObjects = {};   
+    selectedObjects = {};
+    tutorObjects = {};  
 
     constructor() {
         super();
@@ -10,6 +11,7 @@ class ArenaScreen extends Screen {
     initScreen() {
         this.display = new PIXI.Container();
         this.initScene();
+        this.initTutor();
     }
 
     initScene() {
@@ -30,52 +32,48 @@ class ArenaScreen extends Screen {
         this.choiceArena = new PIXI.Container();
         this.display.addChild( this.choiceArena );
 
-        let arenaBackground = new PIXI.Sprite( assets.textures.pixi.arenaBackground ); 
-        arenaBackground.anchor.set( 0.5, 0.5 );
-        arenaBackground.width = 660;
-        arenaBackground.height = 480;
-        
-        //this.choiceArena.filters = [filterOutlineMain];        
-        this.choiceArena.addChild( arenaBackground );
-
-        this.firstArena = new PIXI.Sprite( assets.textures.pixi.city );
+        this.firstArena = new PIXI.Sprite( assets.textures.pixi.bigCity );
         this.firstArena.anchor.set( 0.5, 0.5 );
         this.firstArena.filters = [filterOutlineSub];
         this.firstArena.position.set(-152, -115);   
-        this.firstArena.scale.set( 0.3 );
+        this.firstArena.scale.set( 0.2 );
         this.firstArena.width = 285;
+        this.firstArena.height = 215;
         this.firstArena.name = 'city';
         this.firstArena.interactive = true;
         this.firstArena.on( 'pointertap', this.onArenaTap );        
 
-        this.secondArena = new PIXI.Sprite( assets.textures.pixi.commandCenter );
+        this.secondArena = new PIXI.Sprite( assets.textures.pixi.canyonCity );
         this.secondArena.anchor.set( 0.5, 0.5 );
         this.secondArena.filters = [filterOutlineSub];
         this.secondArena.position.set(152, -115);   
-        this.secondArena.scale.set( 0.3 );
+        this.secondArena.scale.set( 0.2 );
         this.secondArena.width = 285;
-        this.secondArena.name = 'commandCenter';
+        this.secondArena.height = 215;
+        this.secondArena.name = 'canyonCity';
         this.secondArena.interactive = true;
         this.secondArena.on( 'pointertap', this.onArenaTap );
 
         this.choiceArena.addChild( this.firstArena, this.secondArena );
 
-        this.thirdArena = new PIXI.Sprite( assets.textures.pixi.desert );
+        this.thirdArena = new PIXI.Sprite( assets.textures.pixi.bigDesert );
         this.thirdArena.anchor.set( 0.5, 0.5 );
         this.thirdArena.filters = [filterOutlineSub];
         this.thirdArena.position.set(-152, 115);   
-        this.thirdArena.scale.set( 0.3 );
+        this.thirdArena.scale.set( 0.2 );
         this.thirdArena.width = 285;
+        this.thirdArena.height = 215;
         this.thirdArena.name = 'desert';
         this.thirdArena.interactive = true;
         this.thirdArena.on( 'pointertap', this.onArenaTap );
 
-        this.fourArena = new PIXI.Sprite( assets.textures.pixi.cave );
+        this.fourArena = new PIXI.Sprite( assets.textures.pixi.bigCave );
         this.fourArena.anchor.set( 0.5, 0.5 );
         this.fourArena.filters = [filterOutlineSub];
         this.fourArena.position.set(152, 115);   
-        this.fourArena.scale.set( 0.3 );
+        this.fourArena.scale.set( 0.2 );
         this.fourArena.width = 285;
+        this.fourArena.height = 215;
         this.fourArena.name = 'cave';
         this.fourArena.interactive = true;
         this.fourArena.on( 'pointertap', this.onArenaTap );
@@ -83,9 +81,7 @@ class ArenaScreen extends Screen {
         this.choiceArena.addChild( this.thirdArena, this.fourArena );
 
         this.caption = new PIXI.Container();
-        this.display.addChild( this.caption ); 
-        this.caption.x = 0;     
-        this.caption.y = 0;
+        this.display.addChild( this.caption );
 
         this.captionPortraite = new PIXI.Sprite( assets.textures.pixi.locationPortraite );
         this.captionPortraite.visible = false;
@@ -99,6 +95,25 @@ class ArenaScreen extends Screen {
 
         this.caption.addChild( this.captionPortraite, this.captionLandscape );
     }
+    
+    initTutor() {      
+        this.tutorObjects.firstObject = this.firstArena;
+        this.tutorObjects.secondObject = this.secondArena;
+
+        this.tutorSelect = new Tutor( this.tutorObjects );
+        this.display.addChild( this.tutorSelect.display );        
+               
+        this.tutorSelect.timeline = gsap.timeline({repeat: -1, repeatDelay: 1, paused: true, delay: 0.5});
+        this.tutorSelect.timeline.from( this.tutorSelect.hand, 0.4, {x: -200, alpha: 0, ease: 'sine.out'});
+        this.tutorSelect.timeline.to( this.tutorSelect.hand.scale, 0.4, {x: 0.45, y: 0.45, repeat: 1, yoyo: true, ease: 'sine.inOut' });	
+        this.tutorSelect.timeline.to( this.tutorSelect.firstObject, 0.4, {alpha: 0, delay: -0.4, repeat: 1, yoyo: true, ease: 'sine.inOut' });	
+
+        this.tutorSelect.timeline.to( this.tutorSelect.hand, 0.6, {x: 220, ease: 'sine.inOut'});
+        this.tutorSelect.timeline.to( this.tutorSelect.hand.scale, 0.4, {x: 0.45, y: 0.45, repeat: 1, yoyo: true, ease: 'sine.inOut' });	
+        this.tutorSelect.timeline.to( this.tutorSelect.secondObject, 0.4, {alpha: 0, delay: -0.4, repeat: 1, yoyo: true, ease: 'sine.inOut' });	
+        this.tutorSelect.timeline.to( this.tutorSelect.hand, 0.5, {x: 340, alpha: 0});
+        //this.tutorSelect.show(); 
+    }
 
     enter(object) {
         //console.log('enter from Arena screen');
@@ -106,8 +121,9 @@ class ArenaScreen extends Screen {
 
         gsap.from( this.choiceArena, 0.6, {alpha: 0} );
         gsap.from( this.caption, 0.5, {alpha: 0, repeat: -1, yoyo: true, ease: 'sine.inOut'} );
-        //gsap.from( this.caption, 0.4, {x: 1.1, y: 1.1, repeat: -1, yoyo: true, ease: 'sine.inOut'} );
         gsap.from( this.choiceArena.scale, 0.7, {x:0.7, y:0.7, ease: "power1.out"} );
+        
+        setTimeout( this.tutorSelect.show, 1500 );
     }
 
     exit() {
@@ -122,11 +138,12 @@ class ArenaScreen extends Screen {
             case 'city':
                 this.selectedObjects.arenaName = event.currentTarget.name;
                 this.firstArena.filters = [filterOutline];
+                this.tutorSelect.hide();
                 gsap.to( this.secondArena, 0.5, { alpha: 0 });
                 gsap.to( this.thirdArena, 0.5, { alpha: 0 });
                 gsap.to( this.fourArena, 0.5, { alpha: 0 });
                 gsap.to( this.firstArena, 0.6, {x: 0, y: 0, ease: 'sine.inOut', onComplete: () => {
-                    gsap.to( this.firstArena.scale, 0.4, {x: 0.5, y: 0.5, ease: 'sine.inOut'});
+                    gsap.to( this.firstArena.scale, 0.4, {x: 0.32, y: 0.47, ease: 'sine.inOut'});
                     gsap.to( this.firstArena, 0.6, { alpha: 0 , delay: 0.4, repeat: -1, yoyo: true, ease: 'sine.inOut'});
                     //
                 }});
@@ -137,14 +154,15 @@ class ArenaScreen extends Screen {
                 this.firstArena.interactive = false;
                 break;
 
-                case 'commandCenter':
+                case 'canyonCity':
                 this.selectedObjects.arenaName = event.currentTarget.name;
                 this.secondArena.filters = [filterOutline];
+                this.tutorSelect.hide();
                 gsap.to( this.firstArena, 0.5, { alpha: 0 });
                 gsap.to( this.thirdArena, 0.5, { alpha: 0 });
                 gsap.to( this.fourArena, 0.5, { alpha: 0 });
                 gsap.to( this.secondArena, 0.6, {x: 0, y: 0, ease: 'sine.inOut', onComplete: () => {
-                    gsap.to( this.secondArena.scale, 0.4, {x: 0.5, y: 0.5, ease: 'sine.inOut'});
+                    gsap.to( this.secondArena.scale, 0.4, {x: 0.32, y: 0.47, ease: 'sine.inOut'});
                     gsap.to( this.secondArena, 0.6, { alpha: 0 , delay: 0.4, repeat: -1, yoyo: true, ease: 'sine.inOut'});
                     //
                 }});
@@ -158,11 +176,12 @@ class ArenaScreen extends Screen {
                 case 'desert':
                 this.selectedObjects.arenaName = event.currentTarget.name;
                 this.thirdArena.filters = [filterOutline];
+                this.tutorSelect.hide();
                 gsap.to( this.firstArena, 0.5, { alpha: 0 });
                 gsap.to( this.secondArena, 0.5, { alpha: 0 });
                 gsap.to( this.fourArena, 0.5, { alpha: 0 });
                 gsap.to( this.thirdArena, 0.6, {x: 0, y: 0, ease: 'sine.inOut', onComplete: () => {
-                    gsap.to( this.thirdArena.scale, 0.4, {x: 0.5, y: 0.5, ease: 'sine.inOut'});
+                    gsap.to( this.thirdArena.scale, 0.4, {x: 0.32, y: 0.47, ease: 'sine.inOut'});
                     gsap.to( this.thirdArena, 0.6, { alpha: 0 , delay: 0.4, repeat: -1, yoyo: true, ease: 'sine.inOut'});
                     //
                 }});
@@ -176,11 +195,12 @@ class ArenaScreen extends Screen {
                 case 'cave':
                 this.selectedObjects.arenaName = event.currentTarget.name;
                 this.fourArena.filters = [filterOutline];
+                this.tutorSelect.hide();
                 gsap.to( this.firstArena, 0.5, { alpha: 0 });
                 gsap.to( this.secondArena, 0.5, { alpha: 0 });
                 gsap.to( this.thirdArena, 0.5, { alpha: 0 });
                 gsap.to( this.fourArena, 0.6, {x: 0, y: 0, ease: 'sine.inOut', onComplete: () => {
-                    gsap.to( this.fourArena.scale, 0.4, {x: 0.5, y: 0.5, ease: 'sine.inOut'});
+                    gsap.to( this.fourArena.scale, 0.4, {x: 0.32, y: 0.47, ease: 'sine.inOut'});
                     gsap.to( this.fourArena, 0.6, { alpha: 0 , delay: 0.4, repeat: -1, yoyo: true, ease: 'sine.inOut'});
                 }});
                 gsap.delayedCall( 2.5, () => {
@@ -198,12 +218,15 @@ class ArenaScreen extends Screen {
             this.background.width = 720 * this.background.height/1280;
 
             this.choiceArena.scale.set( 1 ); 
-            this.choiceArena.position.set( 0, -80 );             
+            this.choiceArena.position.set( 0, 30 );             
             
             this.captionPortraite.visible = true;
             this.captionLandscape.visible = false;
             this.caption.position.set(0, -470);
             this.caption.scale.set(0.7);
+
+            this.tutorSelect.hand.position.set(-110, -20);
+            this.tutorSelect.hand.scale.set(0.55);
 
         } else {            
             this.background.width = rightUI - leftUI;
@@ -216,6 +239,9 @@ class ArenaScreen extends Screen {
             this.captionPortraite.visible = false;
             this.caption.position.set(0, -280);
             this.caption.scale.set(0.65);
+
+            this.tutorSelect.hand.position.set(-130, -20);
+            this.tutorSelect.hand.scale.set(0.55);
         }
     }
 }

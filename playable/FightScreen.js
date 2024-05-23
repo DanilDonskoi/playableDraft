@@ -15,24 +15,23 @@ class FightScreen extends Screen {
     }
 
     initScene() {
-        this.bckgrndCity = new PIXI.Sprite(assets.textures.pixi.city);        
+        this.bckgrndCity = new PIXI.Sprite(assets.textures.pixi.bigCity);        
         this.bckgrndCity.anchor.set( 0.5, 0.5 );
         this.bckgrndCity.visible = false;
 
-        this.bckgrndCommandCenter = new PIXI.Sprite(assets.textures.pixi.commandCenter);        
-        this.bckgrndCommandCenter.anchor.set( 0.5, 0.5 );
-        this.bckgrndCommandCenter.visible = false;
+        this.bckgrndCanyonCity = new PIXI.Sprite(assets.textures.pixi.canyonCity);        
+        this.bckgrndCanyonCity.anchor.set( 0.5, 0.5 );
+        this.bckgrndCanyonCity.visible = true;
 
-        this.bckgrndDesert = new PIXI.Sprite(assets.textures.pixi.desert);        
+        this.bckgrndDesert = new PIXI.Sprite(assets.textures.pixi.bigDesert);        
         this.bckgrndDesert.anchor.set( 0.5, 0.5 );
         this.bckgrndDesert.visible = false;
 
-        this.bckgrndCave = new PIXI.Sprite(assets.textures.pixi.cave);        
+        this.bckgrndCave = new PIXI.Sprite(assets.textures.pixi.bigCave);        
         this.bckgrndCave.anchor.set( 0.5, 0.5 );
         this.bckgrndCave.visible = false;
 
-        this.display.addChild( this.bckgrndCity, this.bckgrndCommandCenter, this.bckgrndDesert, this.bckgrndCave );
-        //this.display.addChild( this.background );
+        this.display.addChild( this.bckgrndCity, this.bckgrndCanyonCity, this.bckgrndDesert, this.bckgrndCave );
 
         this.initCharacters();
     }  
@@ -93,23 +92,21 @@ class FightScreen extends Screen {
 
     initCharacters() {        
         this.display.addChild(this.spineRanger);
-        this.spineRanger.visible = false;
+        this.spineRanger.visible = true;
                 
         this.display.addChild(this.spineRita);
         this.spineRita.visible = false;
 
         this.display.addChild(this.spineGhoul);
         this.spineGhoul.visible = false;
-    } 
-    
-    initEnemies() {
     }
-
+    
     enter( object ) {
         //console.log('enter from fight screen');
 
+        this.spineRanger.visible = true;
         gsap.from( this.spineRanger.scale, 0.7, {x:0.7, y:0.7, ease: "power1.out"} ); 
-
+       
         switch (object.enemyName ) {
             case 'Rita':
                 this.spineRita.visible = true;
@@ -131,8 +128,8 @@ class FightScreen extends Screen {
                 gsap.from( this.bckgrndCity, 0.4, {alpha: 0} );
                 break;
 
-            case 'commandCenter':
-                this.bckgrndCommandCenter.visible = true;
+            case 'highSchool':
+                this.bckgrndHighSchool.visible = true;
                 this.selectedObjects.arenaName = object.arenaName;
                 gsap.from( this.bckgrndCity, 0.4, {alpha: 0} );
                 break;
@@ -161,13 +158,13 @@ class FightScreen extends Screen {
     onResize = ({ isPortraite, leftUI, rightUI, upUI, downUI }) => {               
         if (isPortraite) {
             this.bckgrndCity.height = downUI - upUI;
-            this.bckgrndCity.width = 720 * this.bckgrndCity.height/1280;
-            this.bckgrndCommandCenter.height = downUI - upUI;
-            this.bckgrndCommandCenter.width = 720 * this.bckgrndCommandCenter.height/1280;
+            this.bckgrndCity.width = 720 * this.bckgrndCity.height/780;
+            this.bckgrndCanyonCity.height = downUI - upUI;
+            this.bckgrndCanyonCity.width = 720 * this.bckgrndCanyonCity.height/780;
             this.bckgrndDesert.height = downUI - upUI;
-            this.bckgrndDesert.width = 720 * this.bckgrndDesert.height/1280;
+            this.bckgrndDesert.width = 720 * this.bckgrndDesert.height/780;
             this.bckgrndCave.height = downUI - upUI;
-            this.bckgrndCave.width = 720 * this.bckgrndCave.height/1280;
+            this.bckgrndCave.width = 720 * this.bckgrndCave.height/780;
             
             this.spineRanger.position.set(-170, 500);
             this.spineRanger.scale.set(0.14, 0.14);
@@ -179,13 +176,13 @@ class FightScreen extends Screen {
             this.spineGhoul.scale.set(-0.14, 0.14);
         } else {            
             this.bckgrndCity.width = rightUI - leftUI;
-            this.bckgrndCity.height = 1280 * this.bckgrndCity.width/720;
-            this.bckgrndCommandCenter.height = rightUI - leftUI;
-            this.bckgrndCommandCenter.width = 1280 * this.bckgrndCommandCenter.width/720;
+            this.bckgrndCity.height = 780 * this.bckgrndCity.width/720;
+            this.bckgrndCanyonCity.height = rightUI - leftUI;
+            this.bckgrndCanyonCity.width = 780 * this.bckgrndCanyonCity.width/720;
             this.bckgrndDesert.height = rightUI - leftUI;
-            this.bckgrndDesert.width = 1280 * this.bckgrndDesert.width/720;
+            this.bckgrndDesert.width = 780 * this.bckgrndDesert.width/720;
             this.bckgrndCave.height = rightUI - leftUI;
-            this.bckgrndCave.width = 1280 * this.bckgrndCave.width/720;
+            this.bckgrndCave.width = 780 * this.bckgrndCave.width/720;
             
             this.spineRanger.position.set(-250, 500);
             this.spineRanger.scale.set(0.14, 0.14);

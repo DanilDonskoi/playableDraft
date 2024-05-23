@@ -1,210 +1,259 @@
 let atlasRanger = `
-Character_RangerLightspeed_Medium.png
-size: 4204, 2376
+Character_Enemy_Trickster.png
+size: 1351, 1349
 format: RGBA8888
 filter: Linear, Linear
 repeat: none
-Red/Arm 1-1
+Arm1-1
+  rotate: true
+  xy: 1049, 808
+  size: 290, 293
+  orig: 292, 295
+  offset: 1, 1
+  index: -1
+Arm1-2
   rotate: false
-  xy: 2694, 360
-  size: 465, 800
-  orig: 465, 800
+  xy: 1207, 320
+  size: 139, 226
+  orig: 141, 228
+  offset: 1, 1
+  index: -1
+Arm1-2_FIN
+  rotate: true
+  xy: 460, 0
+  size: 136, 235
+  orig: 138, 237
+  offset: 1, 1
+  index: -1
+Arm2-1
+  rotate: false
+  xy: 1037, 546
+  size: 286, 262
+  orig: 288, 264
+  offset: 1, 1
+  index: -1
+Arm2-2
+  rotate: true
+  xy: 983, 181
+  size: 170, 219
+  orig: 172, 221
+  offset: 1, 1
+  index: -1
+Arm2-2_FIN
+  rotate: true
+  xy: 816, 41
+  size: 96, 201
+  orig: 98, 203
+  offset: 1, 1
+  index: -1
+ArmL_HEAD
+  rotate: true
+  xy: 605, 304
+  size: 72, 86
+  orig: 74, 86
   offset: 0, 0
   index: -1
-Red/Arm 1-2
+ArmL_Palm
   rotate: false
-  xy: 0, 32
-  size: 302, 717
-  orig: 302, 717
+  xy: 834, 156
+  size: 147, 173
+  orig: 149, 175
+  offset: 1, 1
+  index: -1
+ArmR_HEAD
+  rotate: false
+  xy: 1191, 86
+  size: 146, 95
+  orig: 146, 95
   offset: 0, 0
   index: -1
-Red/Arm2-1
-  rotate: false
-  xy: 2496, 1529
-  size: 422, 847
-  orig: 422, 939
-  offset: 0, 58
-  index: -1
-Red/Arm2-2
+ArmR_Palm
   rotate: true
-  xy: 3594, 803
-  size: 442, 585
-  orig: 556, 791
-  offset: 8, 186
+  xy: 1019, 10
+  size: 171, 170
+  orig: 173, 172
+  offset: 1, 1
   index: -1
-Red/Helmet
-  rotate: true
-  xy: 2918, 1820
-  size: 556, 660
-  orig: 650, 750
-  offset: 47, 57
-  index: -1
-Red/HelmetS
-  rotate: true
-  xy: 3594, 1776
-  size: 600, 602
-  orig: 608, 610
-  offset: 4, 4
-  index: -1
-Red/Holster
-  rotate: true
-  xy: 2789, 1172
-  size: 357, 644
-  orig: 365, 652
-  offset: 4, 4
-  index: -1
-Red/HolsterS
+Cheset_Die2
   rotate: false
-  xy: 1516, 125
-  size: 330, 625
-  orig: 338, 633
-  offset: 4, 4
+  xy: 605, 376
+  size: 87, 92
+  orig: 89, 94
+  offset: 1, 1
   index: -1
-Red/Leg1-1
-  rotate: false
-  xy: 2273, 43
-  size: 421, 1085
-  orig: 483, 1128
-  offset: 22, 37
+Chest_Die1
+  rotate: true
+  xy: 605, 468
+  size: 87, 89
+  orig: 89, 91
+  offset: 1, 1
   index: -1
-Red/Leg1-2
+Crest
   rotate: false
-  xy: 1954, 1128
-  size: 542, 1248
-  orig: 542, 1356
+  xy: 591, 1055
+  size: 456, 294
+  orig: 456, 294
   offset: 0, 0
   index: -1
-Red/Leg1-2b
-  rotate: false
-  xy: 1442, 1093
-  size: 512, 1283
-  orig: 524, 1289
-  offset: 6, 3
-  index: -1
-Red/Leg2-1
-  rotate: false
-  xy: 1850, 0
-  size: 423, 1093
-  orig: 442, 1119
-  offset: 13, 15
-  index: -1
-Red/Leg2-2
+Crest Collar
   rotate: true
-  xy: 302, 82
-  size: 667, 1214
-  orig: 682, 1366
-  offset: 0, 29
-  index: -1
-Red/Torso
-  rotate: false
-  xy: 0, 749
-  size: 819, 1627
-  orig: 905, 1627
-  offset: 78, 0
-  index: -1
-Red/TorsoS
-  rotate: false
-  xy: 819, 779
-  size: 623, 1597
-  orig: 623, 1597
+  xy: 2, 108
+  size: 438, 166
+  orig: 438, 166
   offset: 0, 0
   index: -1
-Red/hand01
-  rotate: true
-  xy: 2918, 1532
-  size: 288, 299
-  orig: 296, 308
-  offset: 4, 5
-  index: -1
-Red/hand02
+CrestArm1
   rotate: false
-  xy: 3433, 1245
-  size: 294, 314
-  orig: 302, 322
-  offset: 4, 4
+  xy: 2, 550
+  size: 277, 126
+  orig: 277, 126
+  offset: 0, 0
   index: -1
-Red/hand03
+CrestArm2
   rotate: false
-  xy: 3785, 45
-  size: 287, 445
-  orig: 295, 453
-  offset: 4, 4
+  xy: 605, 137
+  size: 227, 167
+  orig: 227, 167
+  offset: 0, 0
   index: -1
-Red/hand04
+CrestArm3
+  rotate: true
+  xy: 2, 750
+  size: 195, 155
+  orig: 195, 155
+  offset: 0, 0
+  index: -1
+CrestArm4
   rotate: false
-  xy: 2496, 1160
-  size: 293, 369
-  orig: 301, 377
-  offset: 4, 4
+  xy: 403, 555
+  size: 230, 121
+  orig: 230, 121
+  offset: 0, 0
   index: -1
-Red/hand10
+DogFace
   rotate: true
-  xy: 3727, 1278
-  size: 204, 454
-  orig: 212, 462
-  offset: 4, 4
+  xy: 313, 13
+  size: 122, 145
+  orig: 122, 145
+  offset: 0, 0
   index: -1
-Red/hand11
-  rotate: true
-  xy: 3159, 848
-  size: 324, 422
-  orig: 332, 430
-  offset: 4, 4
-  index: -1
-Red/hand12
-  rotate: true
-  xy: 3785, 490
-  size: 313, 415
-  orig: 321, 423
-  offset: 4, 4
-  index: -1
-Red/hand13
-  rotate: true
-  xy: 2694, 4
-  size: 356, 463
-  orig: 364, 471
-  offset: 4, 4
-  index: -1
-Red/hand14
+Epilet1
   rotate: false
-  xy: 3159, 363
-  size: 321, 485
-  orig: 334, 493
-  offset: 4, 4
+  xy: 590, 676
+  size: 97, 114
+  orig: 97, 114
+  offset: 0, 0
   index: -1
-Red/hand5
+Epilet2
   rotate: false
-  xy: 1442, 750
-  size: 408, 343
-  orig: 416, 351
-  offset: 4, 4
+  xy: 89, 9
+  size: 82, 99
+  orig: 82, 99
+  offset: 0, 0
   index: -1
-Red/hand6
-  rotate: true
-  xy: 3157, 4
-  size: 356, 437
-  orig: 364, 445
-  offset: 4, 4
-  index: -1
-Red/hand7
-  rotate: true
-  xy: 3729, 1482
-  size: 294, 475
-  orig: 302, 483
-  offset: 4, 4
-  index: -1
-Red/hand8
-  rotate: true
-  xy: 3217, 1559
-  size: 217, 512
-  orig: 225, 521
-  offset: 4, 5
-  index: -1
-Red/hand9
+Flower1
   rotate: false
-  xy: 3480, 381
-  size: 305, 422
-  orig: 313, 431
-  offset: 4, 5
+  xy: 2, 678
+  size: 89, 72
+  orig: 89, 72
+  offset: 0, 0
+  index: -1
+Flower2
+  rotate: true
+  xy: 2, 8
+  size: 100, 85
+  orig: 100, 85
+  offset: 0, 0
+  index: -1
+Flower3
+  rotate: false
+  xy: 1191, 9
+  size: 68, 77
+  orig: 68, 77
+  offset: 0, 0
+  index: -1
+Hand1
+  rotate: false
+  xy: 173, 4
+  size: 138, 131
+  orig: 140, 133
+  offset: 1, 1
+  index: -1
+Hand2
+  rotate: true
+  xy: 281, 550
+  size: 126, 120
+  orig: 128, 122
+  offset: 1, 1
+  index: -1
+Hand3_OPEN
+  rotate: false
+  xy: 697, 329
+  size: 283, 231
+  orig: 285, 233
+  offset: 1, 1
+  index: -1
+Hand4_OPEN
+  rotate: true
+  xy: 982, 351
+  size: 195, 223
+  orig: 197, 225
+  offset: 1, 1
+  index: -1
+Head
+  rotate: true
+  xy: 689, 560
+  size: 230, 344
+  orig: 232, 346
+  offset: 1, 1
+  index: -1
+Leg1-1
+  rotate: false
+  xy: 393, 136
+  size: 210, 410
+  orig: 212, 412
+  offset: 1, 1
+  index: -1
+Leg1-2
+  rotate: true
+  xy: 591, 790
+  size: 265, 444
+  orig: 265, 444
+  offset: 0, 0
+  index: -1
+Leg2-1
+  rotate: false
+  xy: 170, 135
+  size: 221, 411
+  orig: 223, 413
+  offset: 1, 1
+  index: -1
+Leg2-2
+  rotate: true
+  xy: 170, 676
+  size: 269, 418
+  orig: 269, 418
+  offset: 0, 0
+  index: -1
+Torso
+  rotate: true
+  xy: 2, 945
+  size: 404, 587
+  orig: 404, 587
+  offset: 0, 0
+  index: -1
+Torso_Skirt
+  rotate: true
+  xy: 1049, 1098
+  size: 251, 297
+  orig: 251, 297
+  offset: 0, 0
+  index: -1
+Waist_Flower
+  rotate: false
+  xy: 697, 20
+  size: 117, 117
+  orig: 117, 117
+  offset: 0, 0
   index: -1
 `
