@@ -87,7 +87,7 @@ class EnemyScreen extends Screen {
         this.tutorSelectLandscape = new Tutor( this.tutorEnemy );
         this.display.addChild( this.tutorSelectLandscape.display );   
         
-        this.tutorSelectLandscape.hand.position.set(-60, 50);
+        this.tutorSelectLandscape.hand.position.set(-80, 50);
         this.tutorSelectLandscape.hand.scale.set(0.55); 
         
         this.tutorSelectLandscape.timeline = gsap.timeline({repeat: -1, repeatDelay: 1, paused: true, delay: 0.5});
@@ -95,7 +95,7 @@ class EnemyScreen extends Screen {
         this.tutorSelectLandscape.timeline.to( this.tutorSelectLandscape.hand.scale, 0.4, {x: 0.45, y: 0.45, repeat: 1, yoyo: true, ease: 'sine.inOut' });	
         this.tutorSelectLandscape.timeline.to( this.tutorSelectLandscape.firstObject.scale, 0.4, {x: 0.49, y: 0.49, delay: -0.4, repeat: 1, yoyo: true, ease: 'sine.inOut' });	
 
-        this.tutorSelectLandscape.timeline.to( this.tutorSelectLandscape.hand, 0.6, {x: 270, ease: 'sine.inOut'});
+        this.tutorSelectLandscape.timeline.to( this.tutorSelectLandscape.hand, 0.6, {x: 200, ease: 'sine.inOut'});
         this.tutorSelectLandscape.timeline.to( this.tutorSelectLandscape.hand.scale, 0.4, {x: 0.45, y: 0.45, repeat: 1, yoyo: true, ease: 'sine.inOut' });	
         this.tutorSelectLandscape.timeline.to( this.tutorSelectLandscape.secondObject.scale, 0.4, {x: 0.52, y: 0.52, delay: -0.4, repeat: 1, yoyo: true, ease: 'sine.inOut' });	
         this.tutorSelectLandscape.timeline.to( this.tutorSelectLandscape.hand, 0.5, {x: 340, alpha: 0});
@@ -105,12 +105,9 @@ class EnemyScreen extends Screen {
     enter() {
         //console.log('enter from Select screen');
         gsap.from( this.caption, 0.5, {alpha: 0} );
-        //gsap.from( this.enemyTrickster.scale, 0.7, {x:0.7, y:0.7, ease: "power1.out"} );
-        //gsap.from( this.enemyGhoul.scale, 0.7, {x:0.7, y:0.7, ease: "power1.out"} );
         gsap.from( this.captionPortraite.scale, 0.4, {x: 1.1, y: 1.1, repeat: -1, yoyo: true, ease: 'sine.inOut'} );
         gsap.from( this.captionLandscape.scale, 0.4, {x: 1.1, y: 1.1, repeat: -1, yoyo: true, ease: 'sine.inOut'} );
 
-        //setTimeout( this.tutorSelectPortraite.show, 1500 );
     }
 
     exit() {
