@@ -23,23 +23,20 @@ class ArenaScreen extends Screen {
     }
 
     initChoiceArena() {
-        // let filterOutlineMain = new PIXI.filters.OutlineFilter( 3, 0xffffff);
-        // filterOutlineMain.padding = 10;
-
         let filterOutlineSub = new PIXI.filters.OutlineFilter( 3, 0x009D91);
         filterOutlineSub.padding = 3;
 
         this.choiceArena = new PIXI.Container();
         this.display.addChild( this.choiceArena );
 
-        this.firstArena = new PIXI.Sprite( assets.textures.pixi.bigCity );
+        this.firstArena = new PIXI.Sprite( assets.textures.pixi.park );
         this.firstArena.anchor.set( 0.5, 0.5 );
         this.firstArena.filters = [filterOutlineSub];
         this.firstArena.position.set(-152, -115);   
         this.firstArena.scale.set( 0.2 );
         this.firstArena.width = 285;
         this.firstArena.height = 215;
-        this.firstArena.name = 'city';
+        this.firstArena.name = 'park';
         this.firstArena.interactive = true;
         this.firstArena.on( 'pointertap', this.onArenaTap );        
 
@@ -56,7 +53,7 @@ class ArenaScreen extends Screen {
 
         this.choiceArena.addChild( this.firstArena, this.secondArena );
 
-        this.thirdArena = new PIXI.Sprite( assets.textures.pixi.bigDesert );
+        this.thirdArena = new PIXI.Sprite( assets.textures.pixi.desert );
         this.thirdArena.anchor.set( 0.5, 0.5 );
         this.thirdArena.filters = [filterOutlineSub];
         this.thirdArena.position.set(-152, 115);   
@@ -67,7 +64,7 @@ class ArenaScreen extends Screen {
         this.thirdArena.interactive = true;
         this.thirdArena.on( 'pointertap', this.onArenaTap );
 
-        this.fourArena = new PIXI.Sprite( assets.textures.pixi.bigCave );
+        this.fourArena = new PIXI.Sprite( assets.textures.pixi.cave );
         this.fourArena.anchor.set( 0.5, 0.5 );
         this.fourArena.filters = [filterOutlineSub];
         this.fourArena.position.set(152, 115);   
@@ -101,14 +98,16 @@ class ArenaScreen extends Screen {
         this.tutorObjects.secondObject = this.secondArena;
 
         this.tutorSelect = new Tutor( this.tutorObjects );
-        this.display.addChild( this.tutorSelect.display );        
+        this.display.addChild( this.tutorSelect.display ); 
+
+        this.tutorSelect.hand.position.set(-110, -20);       
                
         this.tutorSelect.timeline = gsap.timeline({repeat: -1, repeatDelay: 1, paused: true, delay: 0.5});
         this.tutorSelect.timeline.from( this.tutorSelect.hand, 0.4, {x: -200, alpha: 0, ease: 'sine.out'});
         this.tutorSelect.timeline.to( this.tutorSelect.hand.scale, 0.4, {x: 0.45, y: 0.45, repeat: 1, yoyo: true, ease: 'sine.inOut' });	
         this.tutorSelect.timeline.to( this.tutorSelect.firstObject, 0.4, {alpha: 0, delay: -0.4, repeat: 1, yoyo: true, ease: 'sine.inOut' });	
 
-        this.tutorSelect.timeline.to( this.tutorSelect.hand, 0.6, {x: 220, ease: 'sine.inOut'});
+        this.tutorSelect.timeline.to( this.tutorSelect.hand, 0.6, {x: 210, ease: 'sine.inOut'});
         this.tutorSelect.timeline.to( this.tutorSelect.hand.scale, 0.4, {x: 0.45, y: 0.45, repeat: 1, yoyo: true, ease: 'sine.inOut' });	
         this.tutorSelect.timeline.to( this.tutorSelect.secondObject, 0.4, {alpha: 0, delay: -0.4, repeat: 1, yoyo: true, ease: 'sine.inOut' });	
         this.tutorSelect.timeline.to( this.tutorSelect.hand, 0.5, {x: 340, alpha: 0});
@@ -127,7 +126,7 @@ class ArenaScreen extends Screen {
     }
 
     exit() {
-       console.log('exit from Select screen')
+       //console.log('exit from Arena screen')
     }
 
     onArenaTap = (event) => {
@@ -135,7 +134,7 @@ class ArenaScreen extends Screen {
         filterOutline.padding = 10;
 
         switch( event.currentTarget.name ) {
-            case 'city':
+            case 'park':
                 this.selectedObjects.arenaName = event.currentTarget.name;
                 this.firstArena.filters = [filterOutline];
                 this.tutorSelect.hide();
@@ -143,7 +142,7 @@ class ArenaScreen extends Screen {
                 gsap.to( this.thirdArena, 0.5, { alpha: 0 });
                 gsap.to( this.fourArena, 0.5, { alpha: 0 });
                 gsap.to( this.firstArena, 0.6, {x: 0, y: 0, ease: 'sine.inOut', onComplete: () => {
-                    gsap.to( this.firstArena.scale, 0.4, {x: 0.32, y: 0.47, ease: 'sine.inOut'});
+                    gsap.to( this.firstArena.scale, 0.4, {x: 0.47, y: 0.62, ease: 'sine.inOut'});
                     gsap.to( this.firstArena, 0.6, { alpha: 0 , delay: 0.4, repeat: -1, yoyo: true, ease: 'sine.inOut'});
                     //
                 }});
@@ -162,7 +161,7 @@ class ArenaScreen extends Screen {
                 gsap.to( this.thirdArena, 0.5, { alpha: 0 });
                 gsap.to( this.fourArena, 0.5, { alpha: 0 });
                 gsap.to( this.secondArena, 0.6, {x: 0, y: 0, ease: 'sine.inOut', onComplete: () => {
-                    gsap.to( this.secondArena.scale, 0.4, {x: 0.32, y: 0.47, ease: 'sine.inOut'});
+                    gsap.to( this.secondArena.scale, 0.4, {x: 0.47, y: 0.62, ease: 'sine.inOut'});
                     gsap.to( this.secondArena, 0.6, { alpha: 0 , delay: 0.4, repeat: -1, yoyo: true, ease: 'sine.inOut'});
                     //
                 }});
@@ -181,7 +180,7 @@ class ArenaScreen extends Screen {
                 gsap.to( this.secondArena, 0.5, { alpha: 0 });
                 gsap.to( this.fourArena, 0.5, { alpha: 0 });
                 gsap.to( this.thirdArena, 0.6, {x: 0, y: 0, ease: 'sine.inOut', onComplete: () => {
-                    gsap.to( this.thirdArena.scale, 0.4, {x: 0.32, y: 0.47, ease: 'sine.inOut'});
+                    gsap.to( this.thirdArena.scale, 0.4, {x: 0.47, y: 0.62, ease: 'sine.inOut'});
                     gsap.to( this.thirdArena, 0.6, { alpha: 0 , delay: 0.4, repeat: -1, yoyo: true, ease: 'sine.inOut'});
                     //
                 }});
@@ -200,7 +199,7 @@ class ArenaScreen extends Screen {
                 gsap.to( this.secondArena, 0.5, { alpha: 0 });
                 gsap.to( this.thirdArena, 0.5, { alpha: 0 });
                 gsap.to( this.fourArena, 0.6, {x: 0, y: 0, ease: 'sine.inOut', onComplete: () => {
-                    gsap.to( this.fourArena.scale, 0.4, {x: 0.32, y: 0.47, ease: 'sine.inOut'});
+                    gsap.to( this.fourArena.scale, 0.4, {x: 0.47, y: 0.62, ease: 'sine.inOut'});
                     gsap.to( this.fourArena, 0.6, { alpha: 0 , delay: 0.4, repeat: -1, yoyo: true, ease: 'sine.inOut'});
                 }});
                 gsap.delayedCall( 2.5, () => {
@@ -222,10 +221,9 @@ class ArenaScreen extends Screen {
             
             this.captionPortraite.visible = true;
             this.captionLandscape.visible = false;
-            this.caption.position.set(0, -470);
+            this.caption.position.set(10, -420);
             this.caption.scale.set(0.7);
-
-            this.tutorSelect.hand.position.set(-110, -20);
+            
             this.tutorSelect.hand.scale.set(0.55);
 
         } else {            

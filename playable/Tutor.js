@@ -19,8 +19,7 @@ class Tutor {
 
         this.hand = new PIXI.Sprite( assets.textures.pixi.hand );
         this.display.addChild( this.hand );
-        this.hand.anchor.set(0.5, 0.5);        
-        this.hand.position.set(-120, -20);
+        this.hand.anchor.set(0.5, 0.5);
         this.hand.scale.set(0.55); 
         this.hand.hitArea = new PIXI.Rectangle(0, 0, 0, 0); 
     }

@@ -25,8 +25,8 @@ function stageDown(e) {
 			Howler.mute(!app.isSounds);	
 		}
 
-		//playSound('bg', true);
-		//fadeSound('bg', 0, 0.4, 1000);
+		// playSound('winJingle', true);
+		// fadeSound('winJingle', 0, 0.4, 1000);
 	};	
 };
 

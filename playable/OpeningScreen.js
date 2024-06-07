@@ -20,17 +20,17 @@ class OpeningScreen extends Screen {
         this.background.anchor.set( 0.5, 0.5 );
         this.display.addChild( this.background );
         
-        this.mainScene = new PIXI.Container();
-        this.display.addChild( this.mainScene );
+        this.character = new PIXI.Container();
+        this.display.addChild( this.character );
         
         this.playerImg =  new PIXI.Sprite(assets.textures.pixi.playerImg);
         this.playerImg.anchor.set( 0.5, 0.5 );
         this.playerImg.scale.set( 0.6 );
         this.playerImg.filters = [filterOutline];
-        this.mainScene.addChild( this.playerImg );
+        this.character.addChild( this.playerImg );
 
         this.speechCaption = new PIXI.Container();
-        this.mainScene.addChild( this.speechCaption );
+        this.character.addChild( this.speechCaption );
         this.speechCaption.visible = false; 
         this.speechCaption.x = 80;     
         this.speechCaption.y = -360;     
@@ -71,13 +71,13 @@ class OpeningScreen extends Screen {
             this.background.height = downUI - upUI;
             this.background.width = 720 * this.background.height/1080;
 
-            this.mainScene.x = -50;            
-            this.mainScene.y = 200;            
+            this.character.position.set(-50, 200 );         
         } else {            
             this.background.width = rightUI - leftUI;
             this.background.height = 1080 * this.background.width/720;
 
-            this.mainScene.y = 280;
+            this.character.position.set(0, 80);
+            this.character.scale.set(0.68);
         }
     }
 }
