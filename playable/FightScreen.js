@@ -568,11 +568,11 @@ class FightScreen extends Screen {
             this.bckgrndPark.width = rightUI - leftUI;
             this.bckgrndPark.height = 780 * this.bckgrndPark.width/720;
             this.bckgrndCanyonCity.height = rightUI - leftUI;
-            this.bckgrndCanyonCity.width = 1080 * this.bckgrndCanyonCity.width/720;
+            this.bckgrndCanyonCity.width = 780 * this.bckgrndCanyonCity.width/720;
             this.bckgrndDesert.height = rightUI - leftUI;
-            this.bckgrndDesert.width = 1080 * this.bckgrndDesert.width/720;
+            this.bckgrndDesert.width = 780 * this.bckgrndDesert.width/720;
             this.bckgrndCave.height = rightUI - leftUI;
-            this.bckgrndCave.width = 1080 * this.bckgrndCave.width/720;
+            this.bckgrndCave.width = 780 * this.bckgrndCave.width/720;
 
             this.characters.scale.set(0.88);
             this.characters.position.set(0, -100);
