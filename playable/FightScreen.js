@@ -344,9 +344,9 @@ class FightScreen extends Screen {
         gsap.delayedCall( 8.4, () => {
             this.darkScreen.visible = true;    
             this.blasterBox.visible = true; 
-            gsap.to(this.darkScreen, 0.8, { alpha: 1, ease: "power1.out" }); 
+            gsap.to(this.darkScreen, 0.8, { alpha: 1, ease: "sine.out" }); 
             gsap.to(this.blasterBox, 0.4, { alpha: 1 } );
-            gsap.to(this.blasterBox.scale, 0.4, {x:1.1, y:1.1, ease: "power1.out"}); 
+            gsap.to(this.blasterBox.scale, 0.4, {x:1.1, y:1.1, ease: "sine.out"}); 
 
             gsap.from(this.burstRayBlaster, 0.5, {alpha: 0, delay: 0.1});
             gsap.to(this.burstRayBlaster, 12, {angle: 360, repeat: -1, ease:'none'});
@@ -442,9 +442,9 @@ class FightScreen extends Screen {
         gsap.delayedCall( 10.7, () => {
             this.darkScreen.visible = true;    
             this.superPunchBox.visible = true; 
-            gsap.to(this.darkScreen, 0.8, { alpha: 1, ease: "power1.out" }); 
+            gsap.to(this.darkScreen, 0.8, { alpha: 1, ease: "sine.out" }); 
             gsap.to(this.superPunchBox, 0.4, { alpha: 1 });
-            gsap.to(this.superPunchBox.scale, 0.4, {x:1.1, y:1.1, ease: "power1.out"}); 
+            gsap.to(this.superPunchBox.scale, 0.4, {x:1.1, y:1.1, ease: "sine.out"}); 
 
             gsap.from(this.burstRaySuperPunch, 0.5, {alpha: 0, delay: 0.1});
             gsap.to(this.burstRaySuperPunch, 12, {angle: 360, repeat: -1, ease:'none'});
