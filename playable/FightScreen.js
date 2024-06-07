@@ -562,8 +562,8 @@ class FightScreen extends Screen {
             this.blasterBox.position.set(-40, -555);
             this.superPunchBox.position.set(240, -555);
             
-            this.darkScreen.width = window.innerWidth*2;
-            this.darkScreen.height = window.innerHeight*2;            
+            this.darkScreen.height = downUI - upUI;
+            this.darkScreen.width = 720 * this.darkScreen.height/1080;            
         } else {            
             this.bckgrndPark.width = rightUI - leftUI;
             this.bckgrndPark.height = 1080 * this.bckgrndPark.width/720;
@@ -584,8 +584,8 @@ class FightScreen extends Screen {
             this.blasterBox.position.set(-35, -270);
             this.superPunchBox.position.set(235, -270);
 
-            this.darkScreen.width = window.innerWidth*2;
-            this.darkScreen.height = window.innerHeight*2;
+            this.darkScreen.width = rightUI - leftUI;
+            this.darkScreen.height = 1080 * this.darkScreen.width/720;
         }
     }   
 
