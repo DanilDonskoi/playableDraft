@@ -566,7 +566,7 @@ class FightScreen extends Screen {
             this.darkScreen.width = 720 * this.darkScreen.height/1080;            
         } else {            
             this.bckgrndPark.width = rightUI - leftUI;
-            this.bckgrndPark.height = 1080 * this.bckgrndPark.width/720;
+            this.bckgrndPark.height = 780 * this.bckgrndPark.width/720;
             this.bckgrndCanyonCity.height = rightUI - leftUI;
             this.bckgrndCanyonCity.width = 1080 * this.bckgrndCanyonCity.width/720;
             this.bckgrndDesert.height = rightUI - leftUI;
