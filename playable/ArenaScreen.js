@@ -214,7 +214,7 @@ class ArenaScreen extends Screen {
     onResize = ({ isPortraite, leftUI, rightUI, upUI, downUI }) => {               
         if (isPortraite) {
             this.background.height = downUI - upUI;
-            this.background.width = 720 * this.background.height/1280;
+            this.background.width = 720 * this.background.height/1080;
 
             this.choiceArena.scale.set( 1 ); 
             this.choiceArena.position.set( 0, 30 );             
@@ -228,7 +228,7 @@ class ArenaScreen extends Screen {
 
         } else {            
             this.background.width = rightUI - leftUI;
-            this.background.height = 1280 * this.background.width/720;
+            this.background.height = 1080 * this.background.width/720;
 
             this.choiceArena.scale.set( 1.15 );  
             this.choiceArena.position.set( 0, 50 );

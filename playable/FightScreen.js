@@ -545,13 +545,13 @@ class FightScreen extends Screen {
     onResize = ({ isPortraite, leftUI, rightUI, upUI, downUI }) => {               
         if (isPortraite) {
             this.bckgrndPark.height = downUI - upUI;
-            this.bckgrndPark.width = 720 * this.bckgrndPark.height/780;
+            this.bckgrndPark.width = 720 * this.bckgrndPark.height/1080;
             this.bckgrndCanyonCity.height = downUI - upUI;
-            this.bckgrndCanyonCity.width = 720 * this.bckgrndCanyonCity.height/780;
+            this.bckgrndCanyonCity.width = 720 * this.bckgrndCanyonCity.height/1080;
             this.bckgrndDesert.height = downUI - upUI;
-            this.bckgrndDesert.width = 720 * this.bckgrndDesert.height/780;
+            this.bckgrndDesert.width = 720 * this.bckgrndDesert.height/1080;
             this.bckgrndCave.height = downUI - upUI;
-            this.bckgrndCave.width = 720 * this.bckgrndCave.height/780;
+            this.bckgrndCave.width = 720 * this.bckgrndCave.height/1080;
 
             this.characters.scale.set(1);
             
@@ -566,13 +566,13 @@ class FightScreen extends Screen {
             this.darkScreen.height = window.innerHeight*2;            
         } else {            
             this.bckgrndPark.width = rightUI - leftUI;
-            this.bckgrndPark.height = 780 * this.bckgrndPark.width/720;
+            this.bckgrndPark.height = 1080 * this.bckgrndPark.width/720;
             this.bckgrndCanyonCity.height = rightUI - leftUI;
-            this.bckgrndCanyonCity.width = 780 * this.bckgrndCanyonCity.width/720;
+            this.bckgrndCanyonCity.width = 1080 * this.bckgrndCanyonCity.width/720;
             this.bckgrndDesert.height = rightUI - leftUI;
-            this.bckgrndDesert.width = 780 * this.bckgrndDesert.width/720;
+            this.bckgrndDesert.width = 1080 * this.bckgrndDesert.width/720;
             this.bckgrndCave.height = rightUI - leftUI;
-            this.bckgrndCave.width = 780 * this.bckgrndCave.width/720;
+            this.bckgrndCave.width = 1080 * this.bckgrndCave.width/720;
 
             this.characters.scale.set(0.88);
             this.characters.position.set(0, -100);

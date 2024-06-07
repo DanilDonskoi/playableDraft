@@ -157,7 +157,7 @@ class EnemyScreen extends Screen {
     onResize = ({ isPortraite, leftUI, rightUI, upUI, downUI }) => {               
         if (isPortraite) {
             this.background.height = downUI - upUI;
-            this.background.width = 720 * this.background.height/1280;
+            this.background.width = 720 * this.background.height/1080;
   
             this.characters.position.set(0, 200);
             this.characters.scale.set(1);   
@@ -172,7 +172,7 @@ class EnemyScreen extends Screen {
 
         } else {            
             this.background.width = rightUI - leftUI;
-            this.background.height = 1280 * this.background.width/720;
+            this.background.height = 1080 * this.background.width/720;
 
             this.characters.position.set(0, 130);
             this.characters.scale.set(0.85); 
