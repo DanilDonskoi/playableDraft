@@ -577,7 +577,7 @@ class FightScreen extends Screen {
             this.characters.scale.set(0.88);
             this.characters.position.set(0, -100);
 
-            this.battleProgressBar.position.set(-20, -300);
+            this.battleProgressBar.position.set(0, -300);
             this.rangerProgressBar.position.set(-200, -130); 
             this.enemyProgressBar.position.set(40, -130);
 
