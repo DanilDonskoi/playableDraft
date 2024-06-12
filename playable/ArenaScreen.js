@@ -138,6 +138,7 @@ class ArenaScreen extends Screen {
                 this.selectedObjects.arenaName = event.currentTarget.name;
                 this.firstArena.filters = [filterOutline];
                 this.tutorSelect.hide();
+                playSound('select', false, 0.5); 
                 gsap.to( this.secondArena, 0.5, { alpha: 0 });
                 gsap.to( this.thirdArena, 0.5, { alpha: 0 });
                 gsap.to( this.fourArena, 0.5, { alpha: 0 });
@@ -157,6 +158,7 @@ class ArenaScreen extends Screen {
                 this.selectedObjects.arenaName = event.currentTarget.name;
                 this.secondArena.filters = [filterOutline];
                 this.tutorSelect.hide();
+                playSound('select', false, 0.5); 
                 gsap.to( this.firstArena, 0.5, { alpha: 0 });
                 gsap.to( this.thirdArena, 0.5, { alpha: 0 });
                 gsap.to( this.fourArena, 0.5, { alpha: 0 });
@@ -176,6 +178,7 @@ class ArenaScreen extends Screen {
                 this.selectedObjects.arenaName = event.currentTarget.name;
                 this.thirdArena.filters = [filterOutline];
                 this.tutorSelect.hide();
+                playSound('select', false, 0.5); 
                 gsap.to( this.firstArena, 0.5, { alpha: 0 });
                 gsap.to( this.secondArena, 0.5, { alpha: 0 });
                 gsap.to( this.fourArena, 0.5, { alpha: 0 });
@@ -195,6 +198,7 @@ class ArenaScreen extends Screen {
                 this.selectedObjects.arenaName = event.currentTarget.name;
                 this.fourArena.filters = [filterOutline];
                 this.tutorSelect.hide();
+                playSound('select', false, 0.5); 
                 gsap.to( this.firstArena, 0.5, { alpha: 0 });
                 gsap.to( this.secondArena, 0.5, { alpha: 0 });
                 gsap.to( this.thirdArena, 0.5, { alpha: 0 });

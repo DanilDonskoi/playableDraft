@@ -93,6 +93,7 @@ class FightScreen extends Screen {
         this.display.addChild(this.bckgrndPark, this.bckgrndCanyonCity, this.bckgrndDesert, this.bckgrndCave);
 
         this.initCharacters();
+        this.initEffectsAnim();
         this.initUI();
     }
 
@@ -114,6 +115,43 @@ class FightScreen extends Screen {
         this.spineRanger.scale.set(0.11);        
         this.spineRanger.position.set(-120, 500);
         this.characters.addChild(this.spineRanger);
+    }    
+
+    initEffectsAnim() {        
+        this.attackEffect = new PIXI.Container();
+        this.characters.addChild( this.attackEffect );
+
+        this.effectCircle = createAnimSprite( assets.textures.pixi['effectCircle'], effectCircleSheetData, 'effectCircle' );	
+	    this.effectCircle.anchor.set(0.5, 0.5);
+        this.effectCircle.scale.set(1.8);
+        this.attackEffect.addChild( this.effectCircle );
+        
+        this.attackEffect.position.set(40, 200);
+        this.effectCircle.visible = false;        
+        this.effectCircle.hitArea = new PIXI.Rectangle(0, 0, 0, 0); 
+        //this.effectCircle.play();  
+
+        this.effectDown = createAnimSprite( assets.textures.pixi['effectDown'], effectDownSheetData, 'effectDown' );	
+	    this.effectDown.anchor.set(0.5);
+        this.effectDown.scale.set(1);
+        this.effectDown.rotation = 90;
+        this.attackEffect.addChild( this.effectDown );
+        
+        this.effectDown.position.set(100, 0);
+        this.effectDown.visible = false;        
+        this.effectDown.hitArea = new PIXI.Rectangle(0, 0, 0, 0); 
+        //this.effectDown.play();
+        
+        this.effectRight = createAnimSprite( assets.textures.pixi['effectRight'], effectRightSheetData, 'effectRight' );	
+	    this.effectRight.anchor.set(0.5);
+        this.effectRight.scale.set(1);
+        this.attackEffect.addChild( this.effectRight );
+        
+        this.effectRight.position.set(150, -50);
+        this.effectRight.visible = false;    
+        this.effectRight.rotation = 6;    
+        this.effectRight.hitArea = new PIXI.Rectangle(0, 0, 0, 0); 
+        //this.effectRight.play();
     }
 
     initUI() {
@@ -270,7 +308,7 @@ class FightScreen extends Screen {
 
     updateHealthBar(bar, health, maxHealth) {
         const newWidth = (health / maxHealth) * 150;
-        gsap.to(bar, 0.2, { width: newWidth, ease: 'sine.out' });
+        gsap.to(bar, 0.2, { width: newWidth, ease: 'sine.inOut' });
     }    
 
     updateBattleProgressBar(bar, progress, maxProgress) {
@@ -294,11 +332,13 @@ class FightScreen extends Screen {
                     this.updateHealthBar(this.progressBarMainEnemy, this.healthEnemy, 100);
                     this.battleProgress += 50;
                     this.updateBattleProgressBar(this.progressBarMainBattle, this.battleProgress, 100);
+                    playSound('damage', false, 0.4);
                 } else if (entry.animation.name === "Fighter_Attack_02") {
                     this.healthEnemy -= 5;
                     this.updateHealthBar(this.progressBarMainEnemy, this.healthEnemy, 100);
                     this.battleProgress += 50;
                     this.updateBattleProgressBar(this.progressBarMainBattle, this.battleProgress, 100);
+                    playSound('damage', false, 0.4);
                 }
             }
         });
@@ -308,6 +348,7 @@ class FightScreen extends Screen {
                 if (entry.animation.name === "Fighter_Attack_02") {
                     this.healthRanger -= 10;
                     this.updateHealthBar(this.progressBarMainRanger, this.healthRanger, 100);
+                    playSound('grunt', false, 0.4);
                 }
             },
         }); 
@@ -327,6 +368,7 @@ class FightScreen extends Screen {
                 if (entry.animation.name === "Fighter_Attack_02") {
                     this.healthRanger -= 10;
                     this.updateHealthBar(this.progressBarMainRanger, this.healthRanger, 100);
+                    playSound('grunt', false, 0.4);
                 }
             },
         }); 
@@ -349,8 +391,7 @@ class FightScreen extends Screen {
             gsap.to(this.blasterBox.scale, 0.4, {x:1.1, y:1.1, ease: "sine.out"}); 
 
             gsap.from(this.burstRayBlaster, 0.5, {alpha: 0, delay: 0.1});
-            gsap.to(this.burstRayBlaster, 12, {angle: 360, repeat: -1, ease:'none'});
-            
+            gsap.to(this.burstRayBlaster, 12, {angle: 360, repeat: -1, ease:'none'}); 
             setTimeout(this.tutorBlaster.show, 800);                   
         });
     }
@@ -361,6 +402,9 @@ class FightScreen extends Screen {
         this.blasterBox.visible = false;
         this.initShooting();
         this.blasterBox.off( 'pointertap', this.onBlasterBoxTap );
+        gsap.delayedCall( 0.2, () => {
+            playSound('blaster', false, 0.4);
+        });
     }
     
     onSuperPunchBoxTap = () => {
@@ -369,6 +413,18 @@ class FightScreen extends Screen {
         this.superPunchBox.visible = false;
         this.initSuperPunchAnim();
         this.superPunchBox.off( 'pointertap', this.onSuperPunchBoxTap );
+        gsap.delayedCall( 0.5, () => {
+            playSound('damage', false, 0.4);
+        });
+        gsap.delayedCall( 0.7, () => {
+            playSound('damage', false, 0.4);
+        });
+        gsap.delayedCall( 1.2, () => {
+            this.healthEnemy -= 15;
+            this.updateHealthBar(this.progressBarMainEnemy, this.healthEnemy, 100);
+            playSound('whScream', false, 0.3);
+        });
+        
     }
 
     initShooting() { 
@@ -385,10 +441,9 @@ class FightScreen extends Screen {
         this.spineRanger.state.addListener({
             complete: (entry) => {
                 if (entry.animation.name === "Shot_VFX") {
-                    this.healthEnemy -= 15;
-                    this.updateHealthBar(this.progressBarMainEnemy, this.healthEnemy, 100);
                     this.battleProgress += 100;
                     this.updateBattleProgressBar(this.progressBarMainBattle, this.battleProgress, 100);
+                    //playSound('damage', false, 0.5);
                 }
             }
         });
@@ -407,14 +462,6 @@ class FightScreen extends Screen {
         this.spineGhoul.state.addAnimation(0, "Fighter_Idle_01", true, 0.5);
         this.spineGhoul.state.addAnimation(0, "Fighter_Hit", false, 1.1);
         this.spineGhoul.state.addAnimation(0, "Fighter_Idle_01", false, 0.5);
-        this.spineGhoul.state.addListener({
-            complete: (entry) => {
-                if (entry.animation.name === "Fighter_Attack_02") {
-                    this.healthRanger -= 10;
-                    this.updateHealthBar(this.progressBarMainRanger, this.healthRanger, 100);
-                }
-            }
-        });
 
         this.spineTrickster.state.setAnimation(0, "Fighter_Idle_01", false, 0.3);
         this.spineTrickster.state.addAnimation(0, "Fighter_Hit", true, 0.4);
@@ -430,14 +477,6 @@ class FightScreen extends Screen {
         this.spineTrickster.state.addAnimation(0, "Fighter_Idle_01", true, 0.5);
         this.spineTrickster.state.addAnimation(0, "Fighter_Hit", false, 1.1);
         this.spineTrickster.state.addAnimation(0, "Fighter_Idle_01", false, 0.5);
-        this.spineTrickster.state.addListener({
-            complete: (entry) => {
-                if (entry.animation.name === "Fighter_Attack_02") {
-                    this.healthRanger -= 10;
-                    this.updateHealthBar(this.progressBarMainRanger, this.healthRanger, 100);
-                }
-            }
-        });
 
         gsap.delayedCall( 10.7, () => {
             this.darkScreen.visible = true;    
@@ -445,16 +484,26 @@ class FightScreen extends Screen {
             gsap.to(this.darkScreen, 0.8, { alpha: 1, ease: "sine.out" }); 
             gsap.to(this.superPunchBox, 0.4, { alpha: 1 });
             gsap.to(this.superPunchBox.scale, 0.4, {x:1.1, y:1.1, ease: "sine.out"}); 
-
             gsap.from(this.burstRaySuperPunch, 0.5, {alpha: 0, delay: 0.1});
             gsap.to(this.burstRaySuperPunch, 12, {angle: 360, repeat: -1, ease:'none'});
-            
             setTimeout(this.tutorSuperPunch.show, 800)                     
         });
     }
 
     initSuperPunchAnim() {
         this.spineRanger.state.setAnimation(0, "Fighter_Attack_04", false);
+        gsap.delayedCall( 0.3, () => {
+            this.effectDown.visible = true;
+            this.effectDown.play();            
+        });
+        gsap.delayedCall( 0.6, () => {
+            this.effectRight.visible = true;
+            this.effectRight.play();            
+        });
+        gsap.delayedCall( 1.3, () => {
+            this.effectCircle.visible = true;
+            this.effectCircle.play();        
+        });
         this.spineRanger.state.addListener({
             complete: (entry) => {
                 if (entry.animation.name === "Fighter_Attack_04") {
@@ -479,18 +528,19 @@ class FightScreen extends Screen {
     }
     
     enter( object ) {
-        // console.log('enter from fight screen');
-        // this.spineRanger.state.setAnimation(0, "Idle_02", true);
-        // 
+        //console.log('enter from fight screen');
         // this.spineTrickster.visible = true;
+        // this.spineTrickster.skeleton.setSkinByName('Trickster');
+        // this.spineTrickster.state.setAnimation(0, "Fighter_Idle_01", true); 
+        // this.initBattle();
+
+        stopSound('bg');  
+        playSound('battle', true, 0.3); 
+        fadeSound('battle', 0, 0.2, 1000);
 
         this.spineRanger.visible = true;
-        gsap.from( this.spineRanger.scale, 0.3, {x:0.15, y:0.15, ease: "power1.out"} );
+        gsap.from( this.spineRanger.scale, 0.3, {x:0.13, y:0.13, ease: "power1.out"} );
         this.spineRanger.state.setAnimation(0, "Idle_02", true);
-        
-        // this.spineTrickster.state.setAnimation(0, "Fighter_Idle_01", true); 
-
-        // this.initBattle();
         
         switch (object.enemyName) {
             case 'Trickster':

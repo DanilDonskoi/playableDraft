@@ -86,7 +86,10 @@ class FinishScreen extends Screen {
         this.award.addChild(  glow, boxBase, mask, glowMask, this.boxLid )
     }
 
-    enter( object ) {        
+    enter( object ) {  
+        stopSound('battle');  
+        playSound('winJingle', false, 0.5);   
+        fadeSound('winJingle', 0, 0.3, 1000);   
         gsap.from( this.caption, 0.5, {alpha: 0, onComplete: () => {
             gsap.to(this.boxLid, 1, {y: -50, ease: "power1.out"} )
         }});

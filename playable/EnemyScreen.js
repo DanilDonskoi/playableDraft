@@ -132,6 +132,7 @@ class EnemyScreen extends Screen {
                     app.screenManager.set( ArenaScreen, this.selectedEnemy, true );             
                 });
                 this.enemyTrickster.off( 'pointertap', this.onCardTap );
+                playSound('select', false, 0.5); 
                 break;
 
             case 'Ghoul':
@@ -147,6 +148,7 @@ class EnemyScreen extends Screen {
                     app.screenManager.set( ArenaScreen, this.selectedEnemy, true );             
                 });
                 this.enemyGhoul.off( 'pointertap', this.onCardTap );
+                playSound('select', false, 0.5); 
                 break;
         }
     }
