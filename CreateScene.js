@@ -41,6 +41,7 @@ function createAnimSprite(texture, framesData, animName) {
 	let animSprite = new PIXI.AnimatedSprite(spriteSheet.animations[animName]);	
 	animSprite.animationSpeed = 0.35;
 	animSprite.loop = false;	
+	animSprite.tint = 0xff0000;
 	
 	return animSprite;
 }	

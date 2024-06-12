@@ -14,7 +14,6 @@ class FightScreen extends Screen {
 
     initScreen() {
         this.display = new PIXI.Container();
-        
         this.initSpine();
         this.initScene();
     }  
@@ -117,7 +116,7 @@ class FightScreen extends Screen {
         this.characters.addChild(this.spineRanger);
     }    
 
-    initEffectsAnim() {        
+    initEffectsAnim() {
         this.attackEffect = new PIXI.Container();
         this.characters.addChild( this.attackEffect );
 
@@ -317,14 +316,6 @@ class FightScreen extends Screen {
     }
 
     initBattle() {
-        this.spineRanger.state.addAnimation(0, "Idle_02", true, 0.4);
-        this.spineRanger.state.addAnimation(0, "Fighter_Attack_01", false, 1);        
-        this.spineRanger.state.addAnimation(0, "Fighter_Attack_02", false, 1);       
-        this.spineRanger.state.addAnimation(0, "Hit", false, 1.4);  
-        this.spineRanger.state.addAnimation(0, "Idle_02", true, 0.4);      
-        this.spineRanger.state.addAnimation(0, "Fighter_Attack_01", false, 1.2);
-        this.spineRanger.state.addAnimation(0, "Fighter_Attack_02", false, 1.2);
-        this.spineRanger.state.addAnimation(0, "Idle_02", false, 1); 
         this.spineRanger.state.addListener({
             complete: (entry) => {
                 if (entry.animation.name === "Fighter_Attack_01") {
@@ -342,7 +333,15 @@ class FightScreen extends Screen {
                 }
             }
         });
-
+        this.spineRanger.state.addAnimation(0, "Idle_02", true, 0.4);
+        this.spineRanger.state.addAnimation(0, "Fighter_Attack_01", false, 1);        
+        this.spineRanger.state.addAnimation(0, "Fighter_Attack_02", false, 1);       
+        this.spineRanger.state.addAnimation(0, "Hit", false, 1.4);  
+        this.spineRanger.state.addAnimation(0, "Idle_02", true, 0.4);      
+        this.spineRanger.state.addAnimation(0, "Fighter_Attack_01", false, 1.2);
+        this.spineRanger.state.addAnimation(0, "Fighter_Attack_02", false, 1.2);
+        this.spineRanger.state.addAnimation(0, "Idle_02", false, 1); 
+        
         this.spineGhoul.state.addListener({
             dispose: (entry) => {
                 if (entry.animation.name === "Fighter_Attack_02") {
@@ -352,7 +351,6 @@ class FightScreen extends Screen {
                 }
             },
         }); 
-        
         this.spineGhoul.state.addAnimation(0, "Fighter_Hit", false, 1.65);
         this.spineGhoul.state.addAnimation(0, "Fighter_Idle_01", true, 0.5);
         this.spineGhoul.state.addAnimation(0, "Fighter_Hit", false, 0.8);
@@ -372,7 +370,6 @@ class FightScreen extends Screen {
                 }
             },
         }); 
-
         this.spineTrickster.state.addAnimation(0, "Fighter_Hit", false, 1.65);
         this.spineTrickster.state.addAnimation(0, "Fighter_Idle_01", true, 0.5);
         this.spineTrickster.state.addAnimation(0, "Fighter_Hit", false, 0.8);
