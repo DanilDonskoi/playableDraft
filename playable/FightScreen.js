@@ -307,12 +307,12 @@ class FightScreen extends Screen {
 
     updateHealthBar(bar, health, maxHealth) {
         const newWidth = (health / maxHealth) * 150;
-        gsap.to(bar, 0.2, { width: newWidth, ease: 'sine.inOut' });
+        gsap.to(bar, 0.2, { width: newWidth, ease: 'sine.out' });
     }    
 
     updateBattleProgressBar(bar, progress, maxProgress) {
         const newWidth = (progress / maxProgress) * 100;
-        gsap.to(bar, { duration: 0.2, width: newWidth, ease: 'sine.inOut' });
+        gsap.to(bar, { duration: 0.2, width: newWidth, ease: 'sine.out' });
     }
 
     initBattle() {
