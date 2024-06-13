@@ -79,7 +79,7 @@ class FightScreen extends Screen {
 
         this.bckgrndCanyonCity = new PIXI.Sprite(assets.textures.pixi.canyonCity);        
         this.bckgrndCanyonCity.anchor.set(0.5);
-        this.bckgrndCanyonCity.visible = false;
+        this.bckgrndCanyonCity.visible = true;
 
         this.bckgrndDesert = new PIXI.Sprite(assets.textures.pixi.desert);        
         this.bckgrndDesert.anchor.set(0.5);
@@ -99,6 +99,20 @@ class FightScreen extends Screen {
     initCharacters() {
         this.characters = new PIXI.Container();
         this.display.addChild(this.characters);
+
+        this.shadowCharacter = new PIXI.Sprite(assets.textures.pixi.shadow);        
+        this.shadowCharacter.anchor.set(0.5);
+        this.shadowCharacter.scale.set(0.42, 0.32);
+        this.shadowCharacter.alpha = 0.5;
+        this.shadowCharacter.position.set(-120, 500);
+        this.characters.addChild(this.shadowCharacter);
+
+        this.shadowEnemy = new PIXI.Sprite(assets.textures.pixi.shadow);        
+        this.shadowEnemy.anchor.set(0.5);
+        this.shadowEnemy.scale.set(0.58, 0.45);
+        this.shadowEnemy.alpha = 0.5;
+        this.shadowEnemy.position.set(120, 500);
+        this.characters.addChild(this.shadowEnemy);
 
         this.spineGhoul.visible = false;
         this.spineGhoul.scale.set(-0.11, 0.11);
@@ -538,7 +552,7 @@ class FightScreen extends Screen {
         this.spineRanger.visible = true;
         gsap.from( this.spineRanger.scale, 0.3, {x:0.13, y:0.13, ease: "power1.out"} );
         this.spineRanger.state.setAnimation(0, "Idle_02", true);
-        
+
         switch (object.enemyName) {
             case 'Trickster':
                 this.spineTrickster.visible = true;

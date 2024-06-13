@@ -71,7 +71,7 @@ class OpeningScreen extends Screen {
             this.background.height = downUI - upUI;
             this.background.width = 720 * this.background.height/1080;
 
-            this.character.position.set(-50, 200 );         
+            this.character.position.set(-50, 200);         
         } else {            
             this.background.width = rightUI - leftUI;
             this.background.height = 1080 * this.background.width/720;
