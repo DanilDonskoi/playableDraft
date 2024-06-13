@@ -105,11 +105,11 @@ class ArenaScreen extends Screen {
         this.tutorSelect.timeline = gsap.timeline({repeat: -1, repeatDelay: 1, paused: true, delay: 0.5});
         this.tutorSelect.timeline.from( this.tutorSelect.hand, 0.4, {x: -200, alpha: 0, ease: 'sine.out'});
         this.tutorSelect.timeline.to( this.tutorSelect.hand.scale, 0.4, {x: 0.45, y: 0.45, repeat: 1, yoyo: true, ease: 'sine.inOut' });	
-        this.tutorSelect.timeline.to( this.tutorSelect.firstObject, 0.4, {alpha: 0, delay: -0.4, repeat: 1, yoyo: true, ease: 'sine.inOut' });	
+        this.tutorSelect.timeline.to( this.tutorSelect.firstObject.scale, 0.4, {x: 0.18, y: 0.28, delay: -0.4, repeat: 1, yoyo: true, ease: 'sine.inOut' });	
 
         this.tutorSelect.timeline.to( this.tutorSelect.hand, 0.6, {x: 210, ease: 'sine.inOut'});
         this.tutorSelect.timeline.to( this.tutorSelect.hand.scale, 0.4, {x: 0.45, y: 0.45, repeat: 1, yoyo: true, ease: 'sine.inOut' });	
-        this.tutorSelect.timeline.to( this.tutorSelect.secondObject, 0.4, {alpha: 0, delay: -0.4, repeat: 1, yoyo: true, ease: 'sine.inOut' });	
+        this.tutorSelect.timeline.to( this.tutorSelect.secondObject.scale, 0.4, {x: 0.18, y: 0.28, delay: -0.4, repeat: 1, yoyo: true, ease: 'sine.inOut' });	
         this.tutorSelect.timeline.to( this.tutorSelect.hand, 0.5, {x: 340, alpha: 0});
         //this.tutorSelect.show(); 
     }
@@ -118,11 +118,15 @@ class ArenaScreen extends Screen {
         //console.log('enter from Arena screen');
         this.selectedObjects.enemyName = object.enemyName;
 
-        gsap.from( this.choiceArena, 0.6, {alpha: 0} );
-        gsap.from( this.caption, 0.5, {alpha: 0, repeat: -1, yoyo: true, ease: 'sine.inOut'} );
-        gsap.from( this.choiceArena.scale, 0.7, {x:0.7, y:0.7, ease: "power1.out"} );
+        gsap.from(this.choiceArena, 0.7, {alpha: 0});
+        gsap.from(this.caption, 0.7, {alpha: 0});
+        gsap.to(this.caption.scale, 0.5, {x: 0.6, y: 0.6, repeat: -1, yoyo: true, ease: 'sine.inOut'} );
+        //gsap.from(this.choiceArena.scale, 0.7, {x:0.7, y:0.7, ease: "power1.out"});
+        //gsap.from( this.caption, 0.5, {alpha: 0, repeat: -1, yoyo: true, ease: 'sine.inOut'} );
+        //gsap.from( this.choiceArena.scale, 0.7, {x:0.7, y:0.7, ease: "power1.out"} );
         
-        setTimeout( this.tutorSelect.show, 1500 );
+        this.tutorSelect.show();
+        //setTimeout( this.tutorSelect.show, 1500 );
     }
 
     exit() {
@@ -137,6 +141,7 @@ class ArenaScreen extends Screen {
             case 'park':
                 this.selectedObjects.arenaName = event.currentTarget.name;
                 this.firstArena.filters = [filterOutline];
+                this.tutorSelect.timeline.pause(0);
                 this.tutorSelect.hide();
                 playSound('select', false, 0.5); 
                 gsap.to( this.secondArena, 0.5, { alpha: 0 });
@@ -144,8 +149,7 @@ class ArenaScreen extends Screen {
                 gsap.to( this.fourArena, 0.5, { alpha: 0 });
                 gsap.to( this.firstArena, 0.6, {x: 0, y: 0, ease: 'sine.inOut', onComplete: () => {
                     gsap.to( this.firstArena.scale, 0.4, {x: 0.47, y: 0.62, ease: 'sine.inOut'});
-                    gsap.to( this.firstArena, 0.6, { alpha: 0 , delay: 0.4, repeat: -1, yoyo: true, ease: 'sine.inOut'});
-                    //
+                    gsap.to( this.firstArena, 0.6, { alpha: 0.5 , delay: 0.4, repeat: -1, yoyo: true, ease: 'sine.inOut'});
                 }});
                 gsap.delayedCall( 2.5, () => {
                     app.screenManager.set( FightScreen, this.selectedObjects, true );             
@@ -157,6 +161,7 @@ class ArenaScreen extends Screen {
                 case 'canyonCity':
                 this.selectedObjects.arenaName = event.currentTarget.name;
                 this.secondArena.filters = [filterOutline];
+                this.tutorSelect.timeline.pause(0);
                 this.tutorSelect.hide();
                 playSound('select', false, 0.5); 
                 gsap.to( this.firstArena, 0.5, { alpha: 0 });
@@ -164,8 +169,7 @@ class ArenaScreen extends Screen {
                 gsap.to( this.fourArena, 0.5, { alpha: 0 });
                 gsap.to( this.secondArena, 0.6, {x: 0, y: 0, ease: 'sine.inOut', onComplete: () => {
                     gsap.to( this.secondArena.scale, 0.4, {x: 0.47, y: 0.62, ease: 'sine.inOut'});
-                    gsap.to( this.secondArena, 0.6, { alpha: 0 , delay: 0.4, repeat: -1, yoyo: true, ease: 'sine.inOut'});
-                    //
+                    gsap.to( this.secondArena, 0.6, { alpha: 0.5 , delay: 0.4, repeat: -1, yoyo: true, ease: 'sine.inOut'});
                 }});
                 gsap.delayedCall( 2.5, () => {
                     app.screenManager.set( FightScreen, this.selectedObjects, true );             
@@ -177,6 +181,7 @@ class ArenaScreen extends Screen {
                 case 'desert':
                 this.selectedObjects.arenaName = event.currentTarget.name;
                 this.thirdArena.filters = [filterOutline];
+                this.tutorSelect.timeline.pause(0);
                 this.tutorSelect.hide();
                 playSound('select', false, 0.5); 
                 gsap.to( this.firstArena, 0.5, { alpha: 0 });
@@ -184,8 +189,7 @@ class ArenaScreen extends Screen {
                 gsap.to( this.fourArena, 0.5, { alpha: 0 });
                 gsap.to( this.thirdArena, 0.6, {x: 0, y: 0, ease: 'sine.inOut', onComplete: () => {
                     gsap.to( this.thirdArena.scale, 0.4, {x: 0.47, y: 0.62, ease: 'sine.inOut'});
-                    gsap.to( this.thirdArena, 0.6, { alpha: 0 , delay: 0.4, repeat: -1, yoyo: true, ease: 'sine.inOut'});
-                    //
+                    gsap.to( this.thirdArena, 0.6, { alpha: 0.5 , delay: 0.4, repeat: -1, yoyo: true, ease: 'sine.inOut'});
                 }});
                 gsap.delayedCall( 2.5, () => {
                     app.screenManager.set( FightScreen, this.selectedObjects, true );             
@@ -197,6 +201,7 @@ class ArenaScreen extends Screen {
                 case 'cave':
                 this.selectedObjects.arenaName = event.currentTarget.name;
                 this.fourArena.filters = [filterOutline];
+                this.tutorSelect.timeline.pause(0);
                 this.tutorSelect.hide();
                 playSound('select', false, 0.5); 
                 gsap.to( this.firstArena, 0.5, { alpha: 0 });
@@ -204,7 +209,7 @@ class ArenaScreen extends Screen {
                 gsap.to( this.thirdArena, 0.5, { alpha: 0 });
                 gsap.to( this.fourArena, 0.6, {x: 0, y: 0, ease: 'sine.inOut', onComplete: () => {
                     gsap.to( this.fourArena.scale, 0.4, {x: 0.47, y: 0.62, ease: 'sine.inOut'});
-                    gsap.to( this.fourArena, 0.6, { alpha: 0 , delay: 0.4, repeat: -1, yoyo: true, ease: 'sine.inOut'});
+                    gsap.to( this.fourArena, 0.6, { alpha: 0.5 , delay: 0.4, repeat: -1, yoyo: true, ease: 'sine.inOut'});
                 }});
                 gsap.delayedCall( 2.5, () => {
                     app.screenManager.set( FightScreen, this.selectedObjects, true );             

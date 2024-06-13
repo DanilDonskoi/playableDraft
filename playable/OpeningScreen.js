@@ -51,12 +51,18 @@ class OpeningScreen extends Screen {
     enter() {
         gsap.from( this.playerImg, 0.3, {alpha: 0} );
         this.playerImg.x = -200;
+        // gsap.delayedCall( 0.1, () => {
+        //     gsap.to( this.playerImg, 0.7, {x:0, y:0, ease: "power1.out"} );             
+        // })
         gsap.to( this.playerImg, 0.7, {x:0, y:0, ease: "power1.out"} );
-        gsap.from( this.speechCaption, 0.5, {alpha: 0, ease: "back.out"});
+        gsap.from( this.speechCaption, 0.5, {alpha: 0, ease: "sine.inOut"});
         gsap.delayedCall( 0.2, () => {
             this.speechCaption.visible = true;
             gsap.from( this.speechCaption.scale, 0.7, {x:0, y:0, ease: "power1.out"} );
         } );
+        gsap.delayedCall( 2.3, () => {
+            gsap.to( this.character, 0.2, {alpha: 0} );         
+        })
         gsap.delayedCall( 2.5, () => {
             app.screenManager.set( EnemyScreen, undefined, true );             
         })

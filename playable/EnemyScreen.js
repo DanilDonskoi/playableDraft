@@ -104,10 +104,10 @@ class EnemyScreen extends Screen {
 
     enter() {
         //console.log('enter from Select screen');
-        gsap.from( this.caption, 0.5, {alpha: 0} );
+        gsap.from( this.characters, 0.5, {alpha: 0, delay: 0.2} );
+        gsap.from( this.caption, 0.5, {alpha: 0, delay: 0.2} );
         gsap.from( this.captionPortraite.scale, 0.4, {x: 1.1, y: 1.1, repeat: -1, yoyo: true, ease: 'sine.inOut'} );
         gsap.from( this.captionLandscape.scale, 0.4, {x: 1.1, y: 1.1, repeat: -1, yoyo: true, ease: 'sine.inOut'} );
-
     }
 
     exit() {
@@ -120,7 +120,9 @@ class EnemyScreen extends Screen {
 
         switch( event.currentTarget.name ) {
             case 'Trickster':
+                this.tutorSelectPortraite.timeline.pause(0);
                 this.tutorSelectPortraite.hide();
+                this.tutorSelectLandscape.timeline.pause(0);
                 this.tutorSelectLandscape.hide();
                 this.selectedEnemy.enemyName = event.currentTarget.name;
                 this.enemyTrickster.filters = [filterOutline];
@@ -136,7 +138,9 @@ class EnemyScreen extends Screen {
                 break;
 
             case 'Ghoul':
+                this.tutorSelectPortraite.timeline.pause(0);
                 this.tutorSelectPortraite.hide();
+                this.tutorSelectLandscape.timeline.pause(0);
                 this.tutorSelectLandscape.hide();
                 this.selectedEnemy.enemyName = event.currentTarget.name;
                 this.enemyGhoul.filters = [filterOutline];
