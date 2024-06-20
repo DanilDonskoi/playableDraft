@@ -26,7 +26,7 @@ function stageDown(e) {
 		}
 
 		playSound('bg', true);
-		fadeSound('bg', 0, 0.3, 1000);
+		fadeSound('bg', 0, 0.13, 1000);
 	};	
 };
 
