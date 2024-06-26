@@ -144,9 +144,9 @@ class ArenaScreen extends Screen {
                 this.tutorSelect.timeline.pause(0);
                 this.tutorSelect.hide();
                 playSound('select', false, 0.5); 
-                gsap.to( this.secondArena, 0.5, { alpha: 0 });
-                gsap.to( this.thirdArena, 0.5, { alpha: 0 });
-                gsap.to( this.fourArena, 0.5, { alpha: 0 });
+                gsap.to( this.secondArena, 0.5, { alpha: 0, visible: false });
+                gsap.to( this.thirdArena, 0.5, { alpha: 0, visible: false });
+                gsap.to( this.fourArena, 0.5, { alpha: 0, visible: false });
                 gsap.to( this.firstArena, 0.6, {x: 0, y: 0, ease: 'sine.inOut', onComplete: () => {
                     gsap.to( this.firstArena.scale, 0.4, {x: 0.47, y: 0.62, ease: 'sine.inOut'});
                     gsap.to( this.firstArena, 0.6, { alpha: 0.5 , delay: 0.4, repeat: -1, yoyo: true, ease: 'sine.inOut'});
@@ -164,9 +164,9 @@ class ArenaScreen extends Screen {
                 this.tutorSelect.timeline.pause(0);
                 this.tutorSelect.hide();
                 playSound('select', false, 0.5); 
-                gsap.to( this.firstArena, 0.5, { alpha: 0 });
-                gsap.to( this.thirdArena, 0.5, { alpha: 0 });
-                gsap.to( this.fourArena, 0.5, { alpha: 0 });
+                gsap.to( this.firstArena, 0.5, { alpha: 0, visible: false  });
+                gsap.to( this.thirdArena, 0.5, { alpha: 0, visible: false  });
+                gsap.to( this.fourArena, 0.5, { alpha: 0, visible: false  });
                 gsap.to( this.secondArena, 0.6, {x: 0, y: 0, ease: 'sine.inOut', onComplete: () => {
                     gsap.to( this.secondArena.scale, 0.4, {x: 0.47, y: 0.62, ease: 'sine.inOut'});
                     gsap.to( this.secondArena, 0.6, { alpha: 0.5 , delay: 0.4, repeat: -1, yoyo: true, ease: 'sine.inOut'});
@@ -184,9 +184,9 @@ class ArenaScreen extends Screen {
                 this.tutorSelect.timeline.pause(0);
                 this.tutorSelect.hide();
                 playSound('select', false, 0.5); 
-                gsap.to( this.firstArena, 0.5, { alpha: 0 });
-                gsap.to( this.secondArena, 0.5, { alpha: 0 });
-                gsap.to( this.fourArena, 0.5, { alpha: 0 });
+                gsap.to( this.firstArena, 0.5, { alpha: 0, visible: false });
+                gsap.to( this.secondArena, 0.5, { alpha: 0, visible: false  });
+                gsap.to( this.fourArena, 0.5, { alpha: 0, visible: false  });
                 gsap.to( this.thirdArena, 0.6, {x: 0, y: 0, ease: 'sine.inOut', onComplete: () => {
                     gsap.to( this.thirdArena.scale, 0.4, {x: 0.47, y: 0.62, ease: 'sine.inOut'});
                     gsap.to( this.thirdArena, 0.6, { alpha: 0.5 , delay: 0.4, repeat: -1, yoyo: true, ease: 'sine.inOut'});
@@ -204,9 +204,9 @@ class ArenaScreen extends Screen {
                 this.tutorSelect.timeline.pause(0);
                 this.tutorSelect.hide();
                 playSound('select', false, 0.5); 
-                gsap.to( this.firstArena, 0.5, { alpha: 0 });
-                gsap.to( this.secondArena, 0.5, { alpha: 0 });
-                gsap.to( this.thirdArena, 0.5, { alpha: 0 });
+                gsap.to( this.firstArena, 0.5, { alpha: 0, visible: false  });
+                gsap.to( this.secondArena, 0.5, { alpha: 0, visible: false  });
+                gsap.to( this.thirdArena, 0.5, { alpha: 0, visible: false });
                 gsap.to( this.fourArena, 0.6, {x: 0, y: 0, ease: 'sine.inOut', onComplete: () => {
                     gsap.to( this.fourArena.scale, 0.4, {x: 0.47, y: 0.62, ease: 'sine.inOut'});
                     gsap.to( this.fourArena, 0.6, { alpha: 0.5 , delay: 0.4, repeat: -1, yoyo: true, ease: 'sine.inOut'});

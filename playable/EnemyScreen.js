@@ -126,7 +126,7 @@ class EnemyScreen extends Screen {
                 this.tutorSelectLandscape.hide();
                 this.selectedEnemy.enemyName = event.currentTarget.name;
                 this.enemyTrickster.filters = [filterOutline];
-                gsap.to( this.enemyGhoul, 0.5, { alpha: 0 });
+                gsap.to( this.enemyGhoul, 0.5, { alpha: 0, visible: false  });
                 gsap.to( this.enemyTrickster.scale, 0.4, {x: 0.53, y: 0.53, ease: 'sine.inOut', onComplete: () => {
                     gsap.to( this.enemyTrickster, 0.6, {x: 0, ease: 'sine.inOut'});
                 }});
@@ -144,7 +144,7 @@ class EnemyScreen extends Screen {
                 this.tutorSelectLandscape.hide();
                 this.selectedEnemy.enemyName = event.currentTarget.name;
                 this.enemyGhoul.filters = [filterOutline];
-                gsap.to( this.enemyTrickster, 0.5, { alpha: 0 });
+                gsap.to( this.enemyTrickster, 0.5, { alpha: 0, visible: false });
                 gsap.to( this.enemyGhoul.scale, 0.4, {x: 0.58, y: 0.58, ease: 'sine.inOut', onComplete: () => {
                     gsap.to( this.enemyGhoul, 0.6, {x: 0, ease: 'sine.inOut'});
                 }});
