@@ -44,6 +44,7 @@ function stageUp(e) {
 
 function clickAd() {
 	/*marker_click@start*/
+	stopSound('bg');  
 	
 	try{
 		if((/iphone|ipad|ipod/i).test(window.navigator.userAgent.toLowerCase())) {						
