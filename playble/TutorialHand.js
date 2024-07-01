@@ -13,9 +13,7 @@ class Tutorial {
         handSprite.pivot.set(9, 8);
         handSprite.scale.set(0.5);
         handSprite.hitArea = new PIXI.Rectangle(0, 0, 0, 0); 
-        
-        
-
+   
         this.display.addChild( handSprite );
         
         this.timeline = gsap.timeline({repeat: -1, repeatDelay: 1, paused: true, delay: 0.5});
@@ -50,7 +48,6 @@ class Tutorial {
 
     hide() {        
         gsap.to( this.display, 0.1, {alpha: 0, visible: false} );
-        this.handTutor.visible = false;
         this.timeline.pause(0);
     }
 }

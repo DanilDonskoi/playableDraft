@@ -147,6 +147,8 @@ function init2dScene() {
 	logo.anchor.set(0.5);
 	let installBtn = new PIXI.Sprite( assets.textures.pixi['installBtn'] );
 	installBtn.anchor.set(0.5);
+	installBtn.interactive = true;
+	installBtn.on('pointerdown', clickAd);
 	app.obj2d.logoBox.addChild( logo, installBtn );
 	gsap.from( installBtn.scale, 0.5, {x: 0.92, y: 0.92, repeat: -1, yoyo: true, ease: 'sine.inOut'})
 
