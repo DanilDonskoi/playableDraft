@@ -74,7 +74,7 @@ class WeaponUpIcon {
 			this.doneBtn.position.set( rightUI - 300, downUI - 105 );
 			this.doneBtn.scale.set(0.46);
 
-			this.handOptionTutor.position.set( leftUI + 80, upUI + 450)
+			this.handOptionTutor.position.set( this.volt.position.x, this.volt.position.y )
         } 
 
         if ( orientation === 'landscape' ) {
@@ -84,7 +84,7 @@ class WeaponUpIcon {
 			this.doneBtn.position.set( rightUI - 250,  downUI - 105 );
 			this.doneBtn.scale.set(0.46);
 
-			this.handOptionTutor.position.set( leftUI + 370, upUI + 175 );
+			this.handOptionTutor.position.set( this.volt.position.x, this.volt.position.y );
         }
     }
 
@@ -143,7 +143,11 @@ class WeaponUpIcon {
 			},
 		});
 		this.iconOptions.visible = true;
-		gsap.from( this.havoc, 0.6, {alpha: 0, delay: 0.6} );
+		gsap.from( this.havoc, 0.6, {alpha: 0, delay: 0.6,
+			onComplete: () => {
+				this.timelineOption.play();
+			}}
+		);
 		gsap.from( this.hazard, 0.6, {alpha: 0, delay: 0.7} );
 		gsap.from( this.volt, 0.6, {alpha: 0, delay: 0.8} );
 
@@ -152,7 +156,6 @@ class WeaponUpIcon {
 		gsap.from( this.volt.scale, 0.6, {x: 0.85, y: 0.85,  delay: 0.8} );
 		
         gsap.to( this.handOptionTutor, 0.5, {alpha: 1} );
-		this.timelineOption.play();
 		playSound('click', false, 0.5);
 	}
 	
@@ -179,6 +182,9 @@ class WeaponUpIcon {
 			app.obj3d.mech.volt.visible = false;
 			gsap.from( app.obj3d.mech.havoc.position, 0.3, {y: 7, ease: 'sine.inOut'});
 		});
+		this.havoc.off('pointerdown', this.onHavocTap);
+		this.hazard.on('pointerdown', this.onHazardTap);
+		this.volt.on('pointerdown', this.onVoltTap);
 		playSound('click', false, 0.5); 
 	}
 	
@@ -199,6 +205,9 @@ class WeaponUpIcon {
 			app.obj3d.mech.volt.visible = false;
 			gsap.from( app.obj3d.mech.hazard.position, 0.3, {y: 7, ease: 'sine.inOut'});
 		});
+		this.hazard.off('pointerdown', this.onHazardTap);
+		this.havoc.on('pointerdown', this.onHavocTap);
+		this.volt.on('pointerdown', this.onVoltTap);
 		playSound('click', false, 0.5); 
 	}
 
@@ -219,6 +228,9 @@ class WeaponUpIcon {
 			app.obj3d.mech.hazard.visible = false;
 			gsap.from( app.obj3d.mech.volt.position, 0.3, {y: 7, ease: 'sine.inOut'});
 		});
+		this.volt.off('pointerdown', this.onVoltTap);
+		this.havoc.on('pointerdown', this.onHavocTap);
+		this.hazard.on('pointerdown', this.onHazardTap);
 		playSound('click', false, 0.5); 
 	}
 
@@ -226,9 +238,9 @@ class WeaponUpIcon {
 		this.removeFromActiveIcons();
 		gsap.to( this.doneBtn.scale, 0.3, {x: 0.56, y: 0.56, repeat: 1, yoyo: true, ease: 'sine.inOut', delay: 0.1});	
 
-		this.havoc.off('pointerdown', this.onBlueOptionTap);
-		this.hazard.off('pointerdown', this.onYellowOptionTap);
-		this.volt.off('pointerdown', this.onGreyOptionTap);
+		this.havoc.off('pointerdown', this.onHavocTap);
+		this.hazard.off('pointerdown', this.onHazardTap);
+		this.volt.off('pointerdown', this.onVoltTap);
 		this.doneBtn.off('pointerdown', this.onDoneBtnTap);
 
         this.timelineDoneBtn.pause(0);

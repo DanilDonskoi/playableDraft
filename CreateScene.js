@@ -11,7 +11,6 @@ function init3dScene() {
 	initLights();
 	initMaterials();
 	initWorld();
-	initTutor();
 }
 
 function initCamera() {	
@@ -117,6 +116,7 @@ function initWorld() {
 	app.obj3d.main.add( mech.model );
 	app.tutorObjects.firstObject = mech.shieldIcon.display;
 
+	initTutor();
 	showAllIcons();
 }
 
@@ -178,7 +178,6 @@ function init2dScene() {
 		app.obj2d.captionPortraite,
 		app.obj2d.captionLandscape,
 		app.obj2d.logoBox,
-		app.obj2d.tutorMain.display,
 		app.obj2d.statsPortraite.display,
 		app.obj2d.statsLandscape.display,
 		app.obj2d.battleBtnBox,
@@ -187,8 +186,9 @@ function init2dScene() {
 }
 
 function initTutor() {	
-	app.obj2d.tutorMain = new Tutorial(app.tutorObjects);
+	app.obj2d.tutorMain = new Tutorial();
 	app.obj2d.tutorMain.show();
+	app.obj3d.mech.shieldIcon.display.addChild(app.obj2d.tutorMain.display )
 }
 
 function showAllIcons() {
@@ -204,10 +204,6 @@ function performFinals() {
 	app.obj3d.mech.model.animation.set( "Ability" );
 	app.obj3d.mech.model.animation.actions.Ability.setLoop( THREE.LoopOnce );
 	if ( app.mainWidth < app.mainHeight ) {
-		// app.obj2d.statsPortraite.show();
-		// app.obj2d.battleBtnBox.visible = true;
-		// gsap.to( app.obj2d.battleBtnBox, 0.5, {alpha: 1} );
-		// gsap.to( app.obj2d.battleBtnBox.scale, 0.4, {x: 0.71, y: 0.71, repeat: -1, yoyo: true, ease: 'power1.inOut' } );	
 		gsap.to ( app.obj3d.lookingPosition, 0.7, {x: 0, y: 10.5, z: 0})
 		gsap.to(app.camera3d.position, 0.7, {x: 0, y: 8, z: 40, ease: "power1.inOut", delay: 0.7,
 			onComplete: () => {
@@ -218,10 +214,6 @@ function performFinals() {
 			},
 		});
 	} else {
-		// app.obj2d.statsLandscape.show();
-		// app.obj2d.battleBtnBox.visible = true;
-		// gsap.to( app.obj2d.battleBtnBox, 0.5, {alpha: 1} );
-		// gsap.to( app.obj2d.battleBtnBox.scale, 0.4, {x: 0.71, y: 0.71, repeat: -1, yoyo: true, ease: 'power1.inOut' } );
 		gsap.to ( app.obj3d.lookingPosition, 0.7, {x: 0, y: 10.5, z: 0})
 		gsap.to(app.camera3d.position, 0.7, {x: 0, y: 8, z: 40, ease: "power1.inOut", delay: 0.7,
 			onComplete: () => {

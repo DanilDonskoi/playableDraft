@@ -59,6 +59,7 @@ class Robot {
         this.model.add( this.shieldIconPoint );
         this.shieldIcon = new ShieldIcon();
 	    app.obj2d.shieldIcon = this.shieldIcon;
+
 		app.activeIcons.push(this.shieldIcon);
         
         this.weaponLeftIconPoint = new THREE.Object3D();

@@ -73,7 +73,7 @@ class WeaponLeftIcon {
 			this.doneBtn.position.set( leftUI + 160, downUI - 350 );
 			this.doneBtn.scale.set(0.46);
 
-			this.handOptionTutor.position.set( leftUI + 150, upUI + 840 );
+			this.handOptionTutor.position.set( this.cryo.position.x, this.cryo.position.y );
         } 
 
         if ( orientation === 'landscape' ) {
@@ -83,7 +83,7 @@ class WeaponLeftIcon {
 			this.doneBtn.position.set( leftUI + 393, downUI - 120 );
 			this.doneBtn.scale.set(0.46);
 
-			this.handOptionTutor.position.set( leftUI + 430, downUI - 165  );
+			this.handOptionTutor.position.set( this.cryo.position.x, this.cryo.position.y );
         }
     }
 
@@ -141,9 +141,12 @@ class WeaponLeftIcon {
 				gsap.to( this.icon.scale, 0.4, {x: 0.51, y: 0.51, ease: 'sine1.inOut'} );
 			},
 		});
-		//gsap.to ( app.obj3d.lookingPosition )
 		this.iconOptions.visible = true;
-		gsap.from( this.atomizer, 0.6, {alpha: 0, delay: 0.6} );
+		gsap.from( this.atomizer, 0.6, {alpha: 0, delay: 0.6, 
+			onComplete: () => {
+				this.timelineOption.play();
+			}}
+		);
 		gsap.from( this.cryo, 0.6, {alpha: 0, delay: 0.7} );
 		gsap.from( this.glacier, 0.6, {alpha: 0, delay: 0.8} );
 
@@ -152,12 +155,10 @@ class WeaponLeftIcon {
 		gsap.from( this.glacier.scale, 0.6, {x: 0.85, y: 0.85,  delay: 0.8} );
 
         gsap.to( this.handOptionTutor, 0.5, {alpha: 1} );
-		this.timelineOption.play();
 		playSound('click', false, 0.5);
 	}
 
 	onOptionTap = () => {
-		//this.handTutor.visible = false;
 		this.iconOptions.off('pointerdown', this.onOptionTap);
         gsap.to( this.handOptionTutor, 0.3, {alpha: 0, visible: false} );
         this.timelineOption.pause(0);
@@ -178,8 +179,11 @@ class WeaponLeftIcon {
 			app.obj3d.mech.atomizer.visible = true;
 			app.obj3d.mech.cryo.visible = false;
 			app.obj3d.mech.glacier.visible = false;
-			gsap.from( app.obj3d.mech.atomizer.position, 0.3, {x: -10, ease: 'sine.inOut'});
+			gsap.from( app.obj3d.mech.atomizer.position, 0.3, {x: -10, ease: 'sine.inOut' });
 		});
+		this.atomizer.off('pointerdown', this.onAtomizerTap);
+		this.cryo.on('pointerdown', this.onCryoTap);
+		this.glacier.on('pointerdown', this.onGlacierTap);
 		playSound('click', false, 0.5); 
 	}
 	
@@ -200,6 +204,9 @@ class WeaponLeftIcon {
 			app.obj3d.mech.glacier.visible = false;
 			gsap.from( app.obj3d.mech.cryo.position, 0.3, {x: -10, ease: 'sine.inOut'});
 		});
+		this.cryo.off('pointerdown', this.onCryoTap);
+		this.atomizer.on('pointerdown', this.onAtomizerTap);
+		this.glacier.on('pointerdown', this.onGlacierTap);
 		playSound('click', false, 0.5); 
 	}
 
@@ -220,6 +227,9 @@ class WeaponLeftIcon {
 			app.obj3d.mech.cryo.visible = false;
 			gsap.from( app.obj3d.mech.glacier.position, 0.3, {x: -10, ease: 'sine.inOut'});
 		});
+		this.glacier.off('pointerdown', this.onGlacierTap);
+		this.atomizer.on('pointerdown', this.onAtomizerTap);
+		this.cryo.on('pointerdown', this.onCryoTap);
 		playSound('click', false, 0.5); 
 	}
 
@@ -227,9 +237,9 @@ class WeaponLeftIcon {
 		this.removeFromActiveIcons();
 		gsap.to( this.doneBtn.scale, 0.3, {x: 0.56, y: 0.56, repeat: 1, yoyo: true, ease: 'sine.inOut', delay: 0.1});	
 
-		this.atomizer.off('pointerdown', this.onBlueOptionTap);
-		this.cryo.off('pointerdown', this.onYellowOptionTap);
-		this.glacier.off('pointerdown', this.onGreyOptionTap);
+		this.atomizer.off('pointerdown', this.onAtomizerTap);
+		this.cryo.off('pointerdown', this.onCryoTap);
+		this.glacier.off('pointerdown', this.onGlacierTap);
 		this.doneBtn.off('pointerdown', this.onDoneBtnTap);
 
 		this.timelineDoneBtn.pause(0);
