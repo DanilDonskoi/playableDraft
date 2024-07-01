@@ -1,15 +1,14 @@
 function appStart() {
 	app.scene2d.visible = true;
-	document.getElementById('main').style.visibility 	= "visible";
-	document.getElementById('progress').style.display 	= "none";
+	document.getElementById('main').style.visibility = "visible";
+	document.getElementById('progress').style.display = "none";
+		
 	/*marker_init@start*/
 	/*marker_init@end*/		
-	
-	//appEndGame();	
 }
 
 
-function stageDown(e) {	
+function stageDown(e) {
 	app.mouse.isDown = true;		
 
 	if (app.isPause) {
@@ -22,13 +21,13 @@ function stageDown(e) {
 		
 		if(!app.isActive) {
 			app.isActive = true;
-			Howler.mute(!app.isSounds);	
+			Howler.mute(!app.isSounds);
 		}
 
-		playSound('bg', true);
-		fadeSound('bg', 0, 0.13, 1000);
-	};	
-};
+		// playSound( "music", true, 0.4 );
+		// fadeSound( "music", 0, assets.sounds["music"].volume(), 1000 );
+	}		
+}
 
 
 function stageMove(e) {	
@@ -59,25 +58,15 @@ function clickAd() {
 
 //-----------------------------------------------------
 
-function winGame() {	
-	//playSound('win');	
-	appEndGame();
-}
-
-function loseGame() {
-	//playSound('fail');
-	appEndGame();
-}
-
 function appEndGame() {
-	if (app.stateGame != 'endGame') {
-		app.stateGame = 'endGame';
+	if (app.stateGame != 'game_end') {
+		app.stateGame = 'game_end';
 		
 		/*marker_endgame@start*/
 		/*marker_endgame@end*/				
 				
 		if(params.fullscreenCta.value){
-			gsap.set(app.obj2d.fsCTA, {delay:1.0, visible:true});
+			gsap.set(app.obj2d.fsCTA, {delay:1.0, overwrite: "none", visible:true});
 		}
 	}
 }

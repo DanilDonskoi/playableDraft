@@ -1,12 +1,13 @@
 function Template() {
-    this.downloadButton = function ({text = 'DOWNLOAD', textColor = 0x4e2f16} = {}) {
+    this.downloadButton = function ({text = 'DOWNLOAD', bgColor = 0xfff000, textColor = 0x4e2f16} = {}) {
         let downloadBtn = new PIXI.Container();
         if (adPlatform.value == 'google') return downloadBtn;
 
         let btnSprite = new PIXI.Container();
         downloadBtn.addChild(btnSprite);
         
-        let btnBg = new PIXI.Sprite( assets.textures.pixi['downloadBtn'] );        
+        let btnBg = PIXI.Sprite.from('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUAAAABzCAMAAADe1ysvAAAAPFBMVEUAAADx8fH09PTq6uru7u75+fn39/fz8/Pz8/Pz8/Pq6ur7+/vr6+vs7Oz6+vry8vLv7+/8/Pz29vbs7Ow6IPm6AAAACnRSTlMA////////kFXHQeh0tgAAB9ZJREFUeNrsl4uOm0AMRbuRYBMhgTb//7EltsVJ7EwGBi2ile/MBr9tbp1t+yeROA2u37fuJ/EZ3e37+p6+7yRvLcbvN9uX9G1Bd/Xr95PYhtclvD27hmHQh8mi4BbZAgaTNGzWfaRWsmBLwKdJCnLJG8QWrCrLZUKR3JhMj59G4XXwMNlL/ovl9rx/w/EQOs+An8b5nnbwOiRasPwe7IdEC/rlC5xog32JuyHRhi5/A+7EdfU3eCzbx3Ec5DTUGJ06Yh5dE584Sl8icFDiyeyiCCqAWqSa6L/Dt7EKGXc/hgOSj6g/LB/yb8F+TLRC/h4eE+1IAv9TAruqaX+LnUEQ2M1xM0a7C0aTNVJF8Uvh1xCS5BI5XyxyCEdXAw5UP473xPCxkBfMauAHFowKBAuOjZXARDuSwCRwE5LAs8ET2C8fET2evo++KPUYglRFrGUWJPy0+jB+LIrqwqIl1oDAfm7fexSMXed9pnb1ApRoQOjbVVvVJ9ofbwR2b88no3d+Cq6EhtOUhXjokf/KrWefRQgruKVEA2hYmfZoNG8g3kP2oj/rCgqBjSt4ILrTriAErp0G/8aYU74/vbfHQmBiA5LAJPBUeEvgvahiuCOahFhKr7vRQvlKR3xrQeH1sV5XAudB5iusCOQpRgNGgIMnJoTfQZyuJY05Sy9QbyIEJlYiCbwngWeDEngpeHEUAy7PIUUFo/yYFCtdRHA+wjWCjCWJdjxDMhaMSAAjBaP90dwIfIgRErCIUicGmg2NHARQcFGJvnXc9aC6GWI8outBGppeb4UPixACZY54EEnHhAPNuZD9iSYK2WT1IwjtyuHI9R56XUFEGBcC63vCAIDp0QCOSumwgBtXECVWjg1qaxpXkDBkiFy5gSR/XALnKu4AaUQ6EuoLF3XXo5AMfZ+GlevDXHc2MNGKJDAJ3Igk8Gx4EDhdpoc4BSdWAuQxTZM8SBKdDFE0hgskXQXXin6uowRT3s08zaAxvbBIUmyEjlcPRpFFF3mZHAK1vcJk4wgPTjsBBFR8PBFcFIFuLhCnaseFT2noKiptmEW2HyXw4o8FInJouucgbPGXC+6b6FksSr6RyEJg5Y/EeZazCxeEmvv3VzBueZT4ZEXrGwj9nENWEKuplRXcN9G6DYQ8rEbgZuzewHr9fwVCYCIJXIsk8GxYTeDXfGsBUUb9KhTA5s04K30Pw1eBQGNH33I+KqpiLy+vL4c6YpyBz54CydVwkyXBfBavNovDZ0YMS/VJLaYsdmdTIzVsCtMNlmfOZTxTBCRKUXT4EQL/tlsGOo0DMRAtykptpUgXKf//r0fs6T1kn2k3tFBgp6Wxx17bO5iKl3fhxX8jbrq1CTjwfwwB+7H0HkDAXACSSArAL0t5Yik7wOYnD0y62cuIpWwAU/tVNtfiMrmSCbgU2EbEkuOW1XVWlEwRzsol6hBBxts6MjgbXOJAV4TGEh0qhRGSwadpxmzM665voOzwIonLIWRi9SMiVopUyMKmJxxu+eI3mzvXEQLBwDHgMOwfheoNpACqo1Ngw/JwkGgkoAjTk3jlAi4GCNSRegFx0DEuoCL32kAkLXbn1g1M/XG7N9Cpe21guHT3BoZV64C6PhwvnZ2vxJChCCDgwC4MAYeAT4BnFrAt3wCbgG1pr2/mNrPp3ZoTTTmiHZcgUBZu02n5fDaxpFs3pxvl8N32kAymkatH7EZ5lSTkHelDUY0iklagSUBP26A2BozgaRB1xlW7EsoHuDXI1JgSvSxP/qIncfGw5ORbQ3DRyC3NBBzYjSHgIwRc28/H3e6IgCvFV/f0QZQkMte+mdaCVdP1SjlLUbqS5OVZ06iAnFVHoZIB8tUl4Oqwp0XsNsAZnVDMGT38fTGhVM3rKVig0f0tozuSYTa/Zx1Z3EBc541jdA9CKl8M3ZiZWbiGrqisTUA7Yb4ei2qHV1RT/WHJwFjohZD5xY1oDJ9MWhpBhAA8CokQKRpukS2GAJSBDhJQoB42oFwQijZ0gVAWDABBIMpzOvqkNkgKwYvMA2SKQniYSYN6A4sloVY4kPrTLiaVC4gAcPRILYOMJHEq9C51g7lFCMHMegNBuYH1CkKxBjAARKmg5IaOVIsbmFe03sDM3CIEh/IGFskFig0MnUnaBRQtByxA745LhXul5GoDB/ZiCDgE7MQQ8NkwBHyIgHPBJJIH5AxBuMZcR3junRAw3s23u2VwBJy3yq9wU759whsYw9NEUZUSTilRwVk5ciisI95M+fZS3M/A0pbpGE1H6M2ljVD4wnEv5jBeLXH+xcWbgDSMgHwvB5lLKMxlAd51SJ41sMWsLEUc31k+IWMScTgu4wLOA31A5CHgfnytgNP8U/DLNnB6kIAUnmTzAXAzP8ma4CjXDQpOUyA7hdBUGoRyqQDDTh0TIiDl3aCTcBllck7pejitXE1hZBQATgVVWz+4FlQxJmBAvb0aXbiYSipBvMpwUunmMh4lMDyFBKMloJMCjtLtQbA01Ya7RqiUTAynYfghIReDRuecIxJxQHEQFycLxHaZgN8Vc0fmY+ACnqfPxTz9HJw3AY/TwF4cNwFP08BenA7f+kvw63E4jL/h/bC/4LGC++ELOL4F98K/Accf8X4cD+A8DfRB/wOOHfzw/o3vwY98/40lvMf6gdNxfBdex/l4OgwMPA3+AqtJQAksLEaNAAAAAElFTkSuQmCC');
+        btnBg.tint = bgColor;
         btnBg.anchor.set(0.5, 0.5);        
 
         let dropShadow = new PIXI.filters.DropShadowFilter({
@@ -27,7 +28,7 @@ function Template() {
         });
         btnText.x = 0;
         btnText.y = 0;
-        btnSprite.addChild(btnText);
+        btnSprite.addChild(btnText);        
         
         downloadBtn.interactive = true;
 	    downloadBtn.on('pointerdown', clickAd);
@@ -106,7 +107,6 @@ function Template() {
 
     this.fullScreenCTA = function() {
         let fsCTA = new PIXI.Graphics();
-        fsCTA.lineStyle(8, 0x00ff00);
         fsCTA.beginFill(0x121214, 1);
         fsCTA.drawRect(-1280 * 0.5, -1280 * 0.5, 1280, 1280);
         fsCTA.endFill();
@@ -120,9 +120,9 @@ function Template() {
     }
 
 
-    this.text = function({txt='', color=0xffffff, fontSize=50}) {
+    this.text = function({txt='', color=0xffffff, fontSize=50, fontFamily='font_baloo'}) {
         let text = PIXIText(txt, {
-            fontFamily: "font_baloo",
+            fontFamily,
             fontSize,
             color,
             align: "center", //left, right, center
@@ -133,12 +133,12 @@ function Template() {
     }     
 
 
-    this.outlinedText = function(string, color=0xffffff, fontSize=50, outlineColor=0x000000, outlineWidth=4) {
+    this.outlinedText = function({txt='', color=0xffffff, fontSize=50, fontFamily='font_baloo', outlineColor=0x000000, outlineWidth=4}) {
         let filterOutline = new PIXI.filters.OutlineFilter(outlineWidth, outlineColor);
         filterOutline.padding = 10;
 
-        let text = PIXIText(string, {
-            fontFamily: "font_baloo",
+        let text = PIXIText(txt, {
+            fontFamily,
             fontSize,
             color,
             align: "center", //left, right, center
@@ -151,37 +151,44 @@ function Template() {
     }    
 
 
-
     this.joystick = function({player, layer, maxSpeed=1, isTutor=false}) {
         let hand;
         let bgSize = 100;
         let barSize = 35;
         let limit = bgSize - barSize;
+        
         player.speed = 0;
+        player.toSpeed = 0;
         player.toRotate = 0;
 
         let joystick = new PIXI.Container();
-        let mouse = {x:0, y:0, isDown:false};        
+        let mouse = {x:0, y:0, isDown:false};
 
-        let joystickBg = new PIXI.Sprite(assets.textures.pixi['joystick_bg']);
-        joystickBg.anchor.set(0.5);
+        let joystickBg = new PIXI.Graphics();
+        joystickBg.lineStyle (2, 0xdddddd);
+        joystickBg.beginFill(0xffffff);
+        joystickBg.drawCircle(0, 0, bgSize);
+        joystickBg.alpha = 0.5;
         joystick.addChild(joystickBg);
 
-        let joystickBar = new PIXI.Sprite(assets.textures.pixi['joystick_bar']);        
-        joystickBar.anchor.set(0.5);
+        let joystickBar = new PIXI.Graphics();
+        joystickBar.lineStyle (2, 0xdddddd);
+        joystickBar.beginFill(0xffffff);
+        joystickBar.drawCircle(0, 0, barSize);
+        joystickBar.alpha = 0.65;
         joystick.addChild(joystickBar);
 
         if (isTutor) {
             hand = PIXI.Sprite.from(assets.textures.pixi['hand']);
-            hand.anchor.set(0.1, 0.1);        
+            hand.anchor.set(0.1, 0.1);
             joystick.addChild(hand);
             hand.a = 0
-            gsap.to(hand, 1.5, {a:Math.PI*2, repeat:-1, ease:'none', onUpdate:() => {               
-				hand.x = 57*Math.cos(hand.a);			
+            gsap.to(hand, 1.5, {a:Math.PI*2, repeat:-1, ease:'none', onUpdate:() => {
+				hand.x = 57*Math.cos(hand.a);
 				hand.y = 57*Math.sin(hand.a);
                 joystickBar.x = hand.x;
                 joystickBar.y = hand.y;
-				hand.rotation = 0.2*Math.sin(hand.a+1);		
+				hand.rotation = 0.2*Math.sin(hand.a+1);
             }});
         } else {
             joystick.visible = false;
@@ -189,11 +196,8 @@ function Template() {
 
         joystick.on('added', addedHandler);
         function addedHandler() {
-            layer.on('pointerdown', stageDownHandler);
-            layer.on('pointermove', stageMoveHandler);
-            layer.on('pointerup', stageUpHandler);
-            layer.on('pointerupoutside', stageUpHandler);           
-            joystick.off('added', addedHandler);           
+            joystick.start();
+            joystick.off('added', addedHandler);
         }          
 
         function stageDownHandler(e) {
@@ -242,9 +246,16 @@ function Template() {
             layer.off('pointerdown', stageDownHandler);
             layer.off('pointermove', stageMoveHandler);
             layer.off('pointerup', stageUpHandler);
-            layer.off('pointerupoutside', stageUpHandler);           
+            layer.off('pointerupoutside', stageUpHandler);
 
             stageUpHandler();
+        }
+
+        joystick.start = function() {
+            layer.on('pointerdown', stageDownHandler);
+            layer.on('pointermove', stageMoveHandler);
+            layer.on('pointerup', stageUpHandler);
+            layer.on('pointerupoutside', stageUpHandler);
         }
 
         return joystick;

@@ -1,32 +1,41 @@
 let app = {
     scaleFactor: 1.5,
     frameDuratioMs: 25,
-    animSpeed: 1 / 15,
+    animSpeed: 1 / 50,
 
     stateGame: 'loaded',
 
     isActive: false,
-    isPause: false,
+    isPause: false,    
     isSounds: params.playSounds.value,
     numClicks: 0,
 
     obj2d: {},
-    sheets: {},   
+    obj3d: {},
 
-    canvas2d: document.getElementById("canvas_2d"),    
+    canvas2d: document.getElementById("canvas_2d"),
+    canvas3d: document.getElementById("canvas_3d"),
 
-    renderer2d: null,   
+    template: new Template(),
+    tutorObjects: {},
+    activeIcons: [],
+
+    renderer2d: null,
+    renderer3d: null,
 
     scene2d: null,
-    
+    scene3d: null,
+
+    camera3d: null,
+    material: {},
+    texture: {},
+    animations: [],
+
     mouse: {},
-    update: new Set(),   
-    resizes: new Set(),   
-    
+    update: new Set(),
+
     mainWidth: 0,
     mainHeight: 0,
     canvasWidth: 0,
-    canvasHeight: 0,
-
-    screenManager: {}
+    canvasHeight: 0
 };	

@@ -15,8 +15,10 @@ function initLibHowler() {
 
 function initLibThree(){
 	app.scene3d = new THREE.Scene();
-	//app.scene3d.background = new THREE.Color(0x006a9d);
-	app.scene3d.background = assets.textures.three['background'];
+	app.scene3d.background = new THREE.Color(0x631022);
+	app.scene3d.fog = new THREE.Fog(0x631022, 55, 90)
+	//app.scene3d.fog = new THREE.FogExp2(0xdc4b45, 0.01)
+	//app.scene3d.background = assets.textures.three['sky'];
 	
 	app.renderer3d = new THREE.WebGLRenderer({ 
 		canvas		: app.canvas3d,
@@ -25,7 +27,7 @@ function initLibThree(){
 	});
 
 	app.renderer3d.shadowMap.enabled = true;
-	app.renderer3d.outputEncoding = THREE.sRGBEncoding;
+	//app.renderer3d.outputEncoding = THREE.sRGBEncoding;
 	
 	app.renderer3d.setSize( window.innerWidth, window.innerHeight );
 }
@@ -80,6 +82,7 @@ function checkVersionIOS() {
 //- MINTEGRAL
 
 let gameCloseMintegral = false;
+
 function appGameEnd(){	
 	if(!gameCloseMintegral && adPlatform.value=="mintegral"){
 		gameCloseMintegral = true;
@@ -148,37 +151,38 @@ function getBrowserLanguage() {
 //- Animation Mixer
 
 function addAnimationMixer(obj3d, animations=obj3d.v_data.animations, loopType=THREE.LoopRepeat) {	
-	let anim = {
+	let animationController = {
 		name: null,
 		mixer: new THREE.AnimationMixer(obj3d),
-		action: {},
+		actions: {},
 		set: threeActionSetState,
 		seek(time) {
-			this.action[this.name].time = time;
+			this.actions[this.name].time = time;
 		}
 	}
 
 	for (let i = 0; i < animations.length; i++) {		
 		let animName = animations[i].name;		
-		let animationClip = anim.mixer.clipAction(animations[i]);
-		anim.action[animName] = animationClip;		
+		let animationClip = animationController.mixer.clipAction(animations[i]);
+		animationController.actions[animName] = animationClip;		
 		animationClip.name = animName;
 		animationClip.clampWhenFinished = true;
 		animationClip.setLoop(loopType);
 	}
 
-	app.animations.push(anim.mixer);
-	obj3d.anim = anim;
+	app.animations.push(animationController.mixer);
+	
+	obj3d.animation = animationController;
 }
 
 function threeActionSetState(name, fadeTime=0.1) {
 	if (this.name && this.name != name) {		
-		this.action[this.name].fadeOut(fadeTime);
+		this.actions[this.name].fadeOut(fadeTime);
 	}
 	this.name = name;
-	this.action[name].reset();	
-	this.action[name].fadeIn(fadeTime);
-	this.action[name].play();		
+	this.actions[name].reset();	
+	this.actions[name].fadeIn(fadeTime);
+	this.actions[name].play();		
 }
 
 //---------------------------------------------------------------------------------
@@ -197,21 +201,21 @@ function playSound(name, loop=false, volume, rate){
 	}
 }
 
-function playSoundSprite(_name){
+function playSoundSprite(name){
 	if(params.playSounds.value){
-		assets.sounds[_name].play("main");
+		assets.sounds[name].play("main");
 	}
 }
 
-function fadeSound(_name, _from, _to, _tm){
+function fadeSound(name, from, to, tm){
 	if(params.playSounds.value){
-		assets.sounds[_name].fade(_from, _to, _tm);
+		assets.sounds[name].fade(from, to, tm);
 	}
 }
 
-function stopSound(_name){
+function stopSound(name){
 	if(params.playSounds.value){
-		assets.sounds[_name].stop();
+		assets.sounds[name].stop();
 	}
 }
 
@@ -233,6 +237,10 @@ function getAngleBetween(obj1, obj2) {
     let dx = obj2.position.x - obj1.position.x;
     let dz = obj2.position.z - obj1.position.z;
     return Math.atan2(dx, dz);
+}
+
+function lerp(value1, value2, speed) {
+	return (1 - speed) * value1 + value2 * speed;
 }
 
 //---------------------------------------------------------------------------------
@@ -261,7 +269,7 @@ function position3dTo2d(obj3d, obj2d) {
 	obj2d.x = vector.x * app.canvasWidth * 0.5 / obj2d.parent.scale.y;
 	obj2d.y = -vector.y * app.canvasHeight * 0.5 / obj2d.parent.scale.y;
 };
-//position3dTo2d.vector = new THREE.Vector3();
+position3dTo2d.vector = new THREE.Vector3();
 
 //---------------------------------------------------------------------------------
 //- 
@@ -284,7 +292,7 @@ function removeFromArray(item, arr) {
 function mixArray(array) {
 	let currentIndex = array.length, temporaryValue, randomIndex;
 
-	while (0 !== currentIndex) {
+	while ( 0 !== currentIndex ) {
 		randomIndex = Math.floor(Math.random() * currentIndex);
 		currentIndex -= 1;
 
@@ -335,10 +343,10 @@ function initAppEventEnterFrame() {
 			if(!app.isPause) {
 				timeOld = timeCurrent;	
 				app.enterFrame();
-			}				
+			}
 			
-			//app.renderer3d.render(app.scene3d, app.camera3d);
-			app.renderer2d.render(app.scene2d);					
+			app.renderer3d.render(app.scene3d, app.camera3d);			
+			app.renderer2d.render(app.scene2d);			
 			
 			timeResize++;
 			if(timeResize >= timeResizeMax){
