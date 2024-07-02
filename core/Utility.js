@@ -448,8 +448,22 @@ function windowOnFocus(){
 		try{ gsap.globalTimeline.resume(); }catch(e){}	
 
 		if(app.isSounds){
+			unlockAudioContext();
 			try{ Howler.mute(false); }catch(e){}	
 		}
 	}	 
+}
+
+function unlockAudioContext() {        
+	let events = ["touchstart", "touchend", "mousedown"];
+	events.forEach(event => document.body.addEventListener(event, unlock, false));
+	
+	function unlock() { 
+		Howler.ctx.resume().then(clean);
+	}
+
+	function clean() { 
+		events.forEach(event => document.body.removeEventListener(event, unlock));
+	}
 }
 
