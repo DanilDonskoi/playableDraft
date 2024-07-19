@@ -496,7 +496,7 @@ class Main {
             let cow = this.cowsImage.children[milkerIndex];
             cow.visible = true;
             playSound('moo', false, 0.5);
-            gsap.from(cow, 0.5, {delay: 0.5, alpha: 0,  
+            gsap.from(cow, 0.5, {delay: 0.3, alpha: 0,  
                 onComplete: () => {
                     if (!this.milkers.includes(false) && !this.stalls.includes(false)) {
                         gsap.to(this.btnBoxDairy, 0.5, {alpha: 0, visible: false});
@@ -549,7 +549,7 @@ class Main {
             let cow = this.cowsImage.children[stallIndex];
             cow.visible = true;
             playSound('moo', false, 0.5);
-            gsap.from(cow, 0.5, {delay: 0.5, alpha: 0,   
+            gsap.from(cow, 0.5, {delay: 0.3, alpha: 0,   
                 onComplete: () => {
                     if (!this.milkers.includes(false) && !this.stalls.includes(false)) {
                         gsap.to(this.btnBoxDairy, 0.5, {alpha: 0, visible: false});
