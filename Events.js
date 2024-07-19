@@ -1,14 +1,15 @@
 function appStart() {
 	app.scene2d.visible = true;
-	document.getElementById('main').style.visibility = "visible";
-	document.getElementById('progress').style.display = "none";
-		
+	document.getElementById('main').style.visibility 	= "visible";
+	document.getElementById('progress').style.display 	= "none";
 	/*marker_init@start*/
 	/*marker_init@end*/		
+	
+	//appEndGame();	
 }
 
 
-function stageDown(e) {
+function stageDown(e) {	
 	app.mouse.isDown = true;		
 
 	if (app.isPause) {
@@ -21,13 +22,13 @@ function stageDown(e) {
 		
 		if(!app.isActive) {
 			app.isActive = true;
-			Howler.mute(!app.isSounds);
+			Howler.mute(!app.isSounds);	
 		}
 
-		playSound( "bg", true, 0.3 );
-		fadeSound('bg', 0, 0.15, 3000);
-	}		
-}
+		playSound('bg', true);
+		fadeSound('bg', 0, 0.13, 1000);
+	};	
+};
 
 
 function stageMove(e) {	
@@ -43,7 +44,7 @@ function stageUp(e) {
 //- clickAd
 
 function clickAd() {
-	/*marker_click@start*/ 
+	/*marker_click@start*/
 	
 	try{
 		if((/iphone|ipad|ipod/i).test(window.navigator.userAgent.toLowerCase())) {						
@@ -58,15 +59,25 @@ function clickAd() {
 
 //-----------------------------------------------------
 
+function winGame() {	
+	//playSound('win');	
+	appEndGame();
+}
+
+function loseGame() {
+	//playSound('fail');
+	appEndGame();
+}
+
 function appEndGame() {
-	if (app.stateGame != 'game_end') {
-		app.stateGame = 'game_end';
+	if (app.stateGame != 'endGame') {
+		app.stateGame = 'endGame';
 		
 		/*marker_endgame@start*/
 		/*marker_endgame@end*/				
 				
 		if(params.fullscreenCta.value){
-			gsap.set(app.obj2d.fsCTA, {delay:1.0, overwrite: "none", visible:true});
+			gsap.set(app.obj2d.fsCTA, {delay:1.0, visible:true});
 		}
 	}
 }

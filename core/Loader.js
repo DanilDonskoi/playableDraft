@@ -84,9 +84,7 @@ let loader = {
 		let data = assets.dataTextures[0];
 		let baseTexture = assets.textures.base[data.name];
 
-		assets.textures.pixi[data.name] = PIXI.Texture.from(baseTexture); 
-		assets.textures.three[data.name] = new THREE.Texture(baseTexture);
-		assets.textures.three[data.name].needsUpdate = true;
+		assets.textures.pixi[data.name] = PIXI.Texture.from(baseTexture); 		
 
 		assets.dataTextures.shift();
 		this.loadTextures();		
@@ -112,26 +110,6 @@ let loader = {
 	},
 	
 	loadSoundsComplete () {
-		this.loadModels();
-	},	
-
-	loadModels () {
-		if (assets.dataModels.length > 0) {
-			let loaderGLTF = new THREE.GLTFLoader();				
-			
-			loaderGLTF.load(assets.dataModels[0].src, (data) => {				
-				assets.models[assets.dataModels[0].name] = data.scene;
-				assets.models[assets.dataModels[0].name].v_data = data;
-
-				assets.dataModels.shift();
-				this.loadModels();
-			});
-		} else {
-			this.loadModelsComplete();
-		}
-	},
-
-	loadModelsComplete () {
 		this.funComplete();
-	}
+	}	
 };
