@@ -572,46 +572,62 @@ class Main {
             stopSound('button');
         }
     }
-    
 
     onBtnFactoryTap = () => {
-        this.btnFactoryClickCount++;
-
-        if (this.btnFactoryClickCount === 1) {
-            this.decreaseMoneyCounter(50);
-            this.buildAnimButter.visible = true;
-            this.buildAnimButter.play();
-            playSound('build', false, 0.5);
-            this.butterImage.alpha = 1;
-            gsap.to(this.background.position, 0.7, {x: -210, y: -270, delay: 0.3, ease: 'quad.in'});
-        } else if (this.btnFactoryClickCount === 2) {
-            this.decreaseMoneyCounter(70);
-            this.buildAnimCoffee.visible = true;
-            this.buildAnimCoffee.play();
-            playSound('build', false, 0.5);
-            this.coffeeImage.alpha = 1;
-            gsap.to(this.background.position, 0.7, {x: -600, y: -270, delay: 0.3, ease: 'quad.in'});
-        } else if (this.btnFactoryClickCount === 3) {
-            this.decreaseMoneyCounter(70);
-            this.buildAnimCurtard.visible = true;
-            this.buildAnimCurtard.play();
-            playSound('build', false, 0.5);
-            this.curtardImage.alpha = 1;
-            gsap.to(this.background.position, 0.7, {x: -650, y: 220, delay: 0.3, ease: 'quad.in'});
-        } else if (this.btnFactoryClickCount === 4) {
-            this.decreaseMoneyCounter(100);
-            this.buildAnimYogurt.visible = true;
-            this.buildAnimYogurt.play(); 
-            playSound('build', false, 0.5);
-            this.yogurtImage.alpha = 1;
-
+        if (this.btnBoxFactory.interactive) {
+            this.btnFactoryClickCount++;
             this.btnBoxFactory.interactive = false;
-            this.btnBoxFactory.off('pointertap', this.onBtnFactoryTap);
-            //stopSound('build');
-
-            appEndGame();
+    
+            if (this.btnFactoryClickCount === 1) {
+                this.decreaseMoneyCounter(50);
+                this.buildAnimButter.visible = true;
+                this.buildAnimButter.play();
+                playSound('build', false, 0.5);
+                this.butterImage.alpha = 1;
+                gsap.to(this.background.position, 0.7, {x: -210, y: -270, delay: 0.3, ease: 'quad.in',
+                    onComplete: () => {
+                        this.btnBoxFactory.interactive = true;
+                    }
+                });
+            } else if (this.btnFactoryClickCount === 2) {
+                this.decreaseMoneyCounter(70);
+                this.buildAnimCoffee.visible = true;
+                this.buildAnimCoffee.play();
+                playSound('build', false, 0.5);
+                this.coffeeImage.alpha = 1;
+                gsap.to(this.background.position, 0.7, {x: -600, y: -270, delay: 0.3, ease: 'quad.in',
+                    onComplete: () => {
+                        this.btnBoxFactory.interactive = true;
+                    }
+                });
+            } else if (this.btnFactoryClickCount === 3) {
+                this.decreaseMoneyCounter(70);
+                this.buildAnimCurtard.visible = true;
+                this.buildAnimCurtard.play();
+                playSound('build', false, 0.5);
+                this.curtardImage.alpha = 1;
+                gsap.to(this.background.position, 0.7, {x: -650, y: 220, delay: 0.3, ease: 'quad.in',
+                    onComplete: () => {
+                        this.btnBoxFactory.interactive = true;
+                    }
+                });
+            } else if (this.btnFactoryClickCount === 4) {
+                this.decreaseMoneyCounter(100);
+                this.buildAnimYogurt.visible = true;
+                this.buildAnimYogurt.play(); 
+                playSound('build', false, 0.5);
+                this.yogurtImage.alpha = 1;
+                gsap.to(this.background.position, 0.7, {x: -650, y: 220, delay: 0.3, ease: 'quad.in',
+                    onComplete: () => {
+                        this.btnBoxFactory.interactive = false;
+                        this.btnBoxFactory.off('pointertap', this.onBtnFactoryTap);
+                        appEndGame();
+                    }
+                });
+            }
         }
     }
+    
 
  	hideStartScreen() {
 		gsap.to( this.startScreen, 0.5, {alpha: 0, visible: false} );
