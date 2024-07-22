@@ -16,8 +16,11 @@ class Main {
         this.display.addChild(this.background);
         this.background.position.set(-640, 970); // start -640, 970   factory 220, -320    dairy 330, 1120
         
-        this.worldMap = new ImageObj(assets.textures.pixi.mapFinal);
-        this.background.addChild( this.worldMap.display );
+        // this.worldMap = new ImageObj(assets.textures.pixi.mapFinal);
+        // this.background.addChild( this.worldMap.display );
+        this.initWorldMap();
+        this.background.addChild( this.worldMap );
+
         this.background.scale.set(0.9)
 
         this.initStartLayer();
@@ -27,6 +30,42 @@ class Main {
         this.initUILayer();
         this.initScenario();
     }
+
+    initWorldMap() {
+        this.worldMap = new PIXI.Container();
+    
+        let imageWidth = 1037;
+        let imageHeight = 1056;
+    
+        let columns = 6;
+        let rows = 4;
+    
+        let imageNames = [
+            'mapFinal1', 'mapFinal2', 'mapFinal3', 'mapFinal4', 'mapFinal5', 'mapFinal6',
+            'mapFinal7', 'mapFinal8', 'mapFinal9', 'mapFinal10', 'mapFinal11', 'mapFinal12',
+            'mapFinal13', 'mapFinal14', 'mapFinal15', 'mapFinal16', 'mapFinal17', 'mapFinal18',
+            'mapFinal19', 'mapFinal20', 'mapFinal21', 'mapFinal22', 'mapFinal23', 'mapFinal24'
+        ];
+    
+        let totalWidth = columns * imageWidth;
+        let totalHeight = rows * imageHeight;
+    
+        imageNames.forEach((imageName, index) => {
+            let backImage = new PIXI.Sprite(assets.textures.pixi[imageName]);
+            backImage.anchor.set(0.5);
+            backImage.visible = true;
+    
+            let col = index % columns;
+            let row = Math.floor(index / columns);
+    
+            backImage.x = col * imageWidth + imageWidth / 2 - totalWidth / 2;
+            backImage.y = row * imageHeight + imageHeight / 2 - totalHeight / 2;
+    
+            this.worldMap.addChild(backImage);
+        });
+    
+    }
+    
 
     initStartLayer() {
         this.startScreen = new PIXI.Container();
@@ -765,11 +804,6 @@ class Main {
 
             this.btnBoxFactoryAnimation.pause();
             gsap.to(this.btnBoxFactory.scale, 0.1, { x: 0.85, y: 0.85 });
-    
-            // let resetButtonAnimation = () => {
-            //     this.btnBoxFactory.interactive = true;
-            //     this.btnBoxFactoryAnimation.play();
-            // };
 
             let startMoneyAnimation = () => {
                 this.moneyAnim.visible = true;
@@ -875,9 +909,9 @@ class Main {
 
                         this.btnBoxFactory.off('pointertap', this.onBtnFactoryTap);
                         this.btnBoxFactoryAnimation.play();
-                        appEndGame();
                     }
                 });
+                appEndGame();
             }
         }
     }

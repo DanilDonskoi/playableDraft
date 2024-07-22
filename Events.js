@@ -1,7 +1,6 @@
 function appStart() {
 	app.scene2d.visible = true;
 	document.getElementById('main').style.visibility 	= "visible";
-	document.getElementById('progress').style.display 	= "none";
 	/*marker_init@start*/
 	/*marker_init@end*/		
 	
