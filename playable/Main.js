@@ -16,8 +16,6 @@ class Main {
         this.display.addChild(this.background);
         this.background.position.set(-640, 970); // start -640, 970   factory 220, -320    dairy 330, 1120
         
-        // this.worldMap = new ImageObj(assets.textures.pixi.mapFinal);
-        // this.background.addChild( this.worldMap.display );
         this.initWorldMap();
         this.background.addChild( this.worldMap );
 
@@ -212,27 +210,44 @@ class Main {
             cowFour.display
         );
 
-        this.milkersImage = new PIXI.Container();
-        this.dairy.addChild( this.milkersImage );
-        this.milkersImage.visible = true;
-        this.milkersImage.position.set( 3, -20)
-
-        let milkerFirst = new ImageObj(assets.textures.pixi.milkerFirst);
-        milkerFirst.display.visible = false;
-        let milkerSecond = new ImageObj(assets.textures.pixi.milkerSecond);
-        milkerSecond.display.visible = false;
-        let milkerThird = new ImageObj(assets.textures.pixi.milkerThird);
-        milkerThird.display.visible = false;
-        let milkerFour = new ImageObj(assets.textures.pixi.milkerFour);
-        milkerFour.display.visible = false;
-        this.milkersImage.addChild( 
-            milkerFirst.display,
-            milkerSecond.display,
-            milkerThird.display,
-            milkerFour.display
-        );
+        this.initDairyWorkers();
     }
 
+    initDairyWorkers() {
+        this.availableMilkerIndices = [0, 1, 2, 3];
+    
+        let positions = [
+            { x: 135, y: -175 },
+            { x: -20, y: -82 },
+            { x: -173, y: 6 },
+            { x: -334, y: 100 },
+        ];
+    
+        this.milkersImage = new PIXI.Container();
+        this.dairy.addChild(this.milkersImage);
+        this.milkersImage.visible = true;
+        this.milkersImage.position.set(0, 0);
+        this.milkersImage.scale.set(-0.9, 0.9);
+    
+        for (let i = 0; i < 4; i++) {
+            let milker = createAnimSprite(assets.textures.pixi["milkerWalk"], milkerWalkSheetData, 'walkFrames');
+            milker.position.set(positions[i].x, positions[i].y);
+            milker.loop = true;
+            milker.visible = false;
+            this.milkersImage.addChild(milker);
+    
+            let milkerIdle = createAnimSprite(assets.textures.pixi["milkerIdle"], milkerIdleSheetData, 'idleFrames');
+            milkerIdle.position.set(positions[i].x, positions[i].y);
+            milkerIdle.scale.set(0.85);
+            milkerIdle.loop = false;
+            milkerIdle.visible = false;
+            milkerIdle.animationSpeed = 0.20;
+            this.milkersImage.addChild(milkerIdle);
+    
+            this.milkers[i] = { walk: milker, idle: milkerIdle };
+        }
+    }
+    
     initFactory() {
         this.btnFactoryClickCount = 0;
 
@@ -252,7 +267,7 @@ class Main {
         this.buildAnimButter.scale.set(1.3);
         this.buildAnimButter.loop = false;
         this.buildAnimButter.visible = false;
-        //this.buildAnimButter.play();
+        this.buildAnimButter.play();
 
         this.moneyAnimButter = createAnimSprite(assets.textures.pixi["moneyNew"], moneyNewSheetData, 'moneyNew' );
         this.butterMachine.addChild( this.moneyAnimButter );
@@ -261,6 +276,13 @@ class Main {
         this.moneyAnimButter.loop = false;
         this.moneyAnimButter.visible = false;
         //this.moneyAnimButter.play();
+
+        this.prodButter = new PIXI.Sprite( assets.textures.pixi.prodButter );
+        this.butterMachine.addChild( this.prodButter );
+        this.prodButter.anchor.set(0.5);
+        this.prodButter.position.set(10, -50);
+        this.prodButter.scale.set(0.7);
+        this.prodButter.visible = false;
 
         this.coffeeMachine = new PIXI.Container(); // -210, -120
         this.coffeeImage = new PIXI.Sprite( assets.textures.pixi.coffeeMachine );
@@ -288,57 +310,78 @@ class Main {
         this.moneyAnimCoffee.visible = false;
         //this.moneyAnimCoffee.play();
 
-        this.curtardMachine = new PIXI.Container(); // -600, -270
-        this.curtardImage = new PIXI.Sprite( assets.textures.pixi.curtardMachine );
-        this.curtardImage.anchor.set( 0.5 );
-        this.curtardImage.alpha = 0.3;
-        this.curtardMachine.addChild( this.curtardImage );
-        this.curtardMachine.position.set(670, 305);
-        this.background.addChild( this.curtardMachine );
-        this.curtardMachine.visible = true;
+        this.prodCoffee = new PIXI.Sprite( assets.textures.pixi.prodCoffee );
+        this.coffeeMachine.addChild( this.prodCoffee );
+        this.prodCoffee.anchor.set(0.5);
+        this.prodCoffee.position.set(15, -50);
+        this.prodCoffee.scale.set(0.7);
+        this.prodCoffee.visible = false;
+
+        this.custardMachine = new PIXI.Container(); // -600, -270
+        this.custardImage = new PIXI.Sprite( assets.textures.pixi.custardMachine );
+        this.custardImage.anchor.set( 0.5 );
+        this.custardImage.alpha = 0.3;
+        this.custardMachine.addChild( this.custardImage );
+        this.custardMachine.position.set(670, 305);
+        this.background.addChild( this.custardMachine );
+        this.custardMachine.visible = true;
         
-        this.buildAnimCurtard = createAnimSprite(assets.textures.pixi["upgrade"], upgradeSheetData, 'upgrade' );
-        this.buildAnimCurtard.animationSpeed = 0.15;
-        this.curtardMachine.addChild( this.buildAnimCurtard );
-        this.buildAnimCurtard.position.set(-260, -450);
-        this.buildAnimCurtard.scale.set(1.3);
-        this.buildAnimCurtard.loop = false;
-        this.buildAnimCurtard.visible = false;
+        this.buildAnimCustard = createAnimSprite(assets.textures.pixi["upgrade"], upgradeSheetData, 'upgrade' );
+        this.buildAnimCustard.animationSpeed = 0.15;
+        this.custardMachine.addChild( this.buildAnimCustard );
+        this.buildAnimCustard.position.set(-260, -450);
+        this.buildAnimCustard.scale.set(1.3);
+        this.buildAnimCustard.loop = false;
+        this.buildAnimCustard.visible = false;
         //this.buildAnimCurtard.play();
 
-        this.moneyAnimCurtard  = createAnimSprite(assets.textures.pixi["moneyNew"], moneyNewSheetData, 'moneyNew' );
-        this.curtardMachine.addChild( this.moneyAnimCurtard );
-        this.moneyAnimCurtard.position.set(0, -100);
-        this.moneyAnimCurtard.scale.set(0.8);
-        this.moneyAnimCurtard.loop = false;
-        this.moneyAnimCurtard.visible = false;
+        this.moneyAnimCustard  = createAnimSprite(assets.textures.pixi["moneyNew"], moneyNewSheetData, 'moneyNew' );
+        this.custardMachine.addChild( this.moneyAnimCustard );
+        this.moneyAnimCustard.position.set(0, -100);
+        this.moneyAnimCustard.scale.set(0.8);
+        this.moneyAnimCustard.loop = false;
+        this.moneyAnimCustard.visible = false;
         //this.moneyAnimCurtard.play();
 
-        this.yogurtMachine = new PIXI.Container(); // -650, -70
-        this.yogurtImage = new PIXI.Sprite( assets.textures.pixi.yogurtMachine );
-        this.yogurtImage.anchor.set( 0.5 );
-        this.yogurtImage.alpha = 0.3;
-        this.yogurtMachine.addChild( this.yogurtImage );
-        this.yogurtMachine.position.set(746, -236);
-        this.background.addChild( this.yogurtMachine );
-        this.yogurtMachine.visible = true;
+        this.prodCustard = new PIXI.Sprite( assets.textures.pixi.prodCustard );
+        this.custardMachine.addChild( this.prodCustard );
+        this.prodCustard.anchor.set(0.5);
+        this.prodCustard.position.set(30, -50);
+        this.prodCustard.scale.set(0.7);
+        this.prodCustard.visible = false;
+
+        this.yogourtMachine = new PIXI.Container(); // -650, -70
+        this.yogourtImage = new PIXI.Sprite( assets.textures.pixi.yogourtMachine );
+        this.yogourtImage.anchor.set( 0.5 );
+        this.yogourtImage.alpha = 0.3;
+        this.yogourtMachine.addChild( this.yogourtImage );
+        this.yogourtMachine.position.set(746, -236);
+        this.background.addChild( this.yogourtMachine );
+        this.yogourtMachine.visible = true;
         
-        this.buildAnimYogurt = createAnimSprite(assets.textures.pixi["upgrade"], upgradeSheetData, 'upgrade' );
-        this.buildAnimYogurt.animationSpeed = 0.15;
-        this.yogurtMachine.addChild( this.buildAnimYogurt );
-        this.buildAnimYogurt.position.set(-260, -420);
-        this.buildAnimYogurt.scale.set(1.3);
-        this.buildAnimYogurt.loop = false;
-        this.buildAnimYogurt.visible = false;
+        this.buildAnimYogourt = createAnimSprite(assets.textures.pixi["upgrade"], upgradeSheetData, 'upgrade' );
+        this.buildAnimYogourt.animationSpeed = 0.15;
+        this.yogourtMachine.addChild( this.buildAnimYogourt );
+        this.buildAnimYogourt.position.set(-260, -420);
+        this.buildAnimYogourt.scale.set(1.3);
+        this.buildAnimYogourt.loop = false;
+        this.buildAnimYogourt.visible = false;
         //this.buildAnimYogurt.play(); 
 
         this.moneyAnimYogurt  = createAnimSprite(assets.textures.pixi["moneyNew"], moneyNewSheetData, 'moneyNew' );
-        this.yogurtMachine.addChild( this.moneyAnimYogurt );
+        this.yogourtMachine.addChild( this.moneyAnimYogurt );
         this.moneyAnimYogurt.position.set(0, -100);
         this.moneyAnimYogurt.scale.set(0.8);
         this.moneyAnimYogurt.loop = false;
         this.moneyAnimYogurt.visible = false;
         //this.moneyAnimYogurt.play();
+
+        this.prodYogourt = new PIXI.Sprite( assets.textures.pixi.prodYogourt );
+        this.yogourtMachine.addChild( this.prodYogourt );
+        this.prodYogourt.anchor.set(0.5);
+        this.prodYogourt.position.set(10, -50);
+        this.prodYogourt.scale.set(0.7);
+        this.prodYogourt.visible = false;
     }
 
     initUILayer() {
@@ -696,56 +739,74 @@ class Main {
         }
     }
 
-    onBtnActionBlueTap = () => { 
+    onBtnActionBlueTap = () => {
+        if (this.availableMilkerIndices.length === 0) {
+            console.log('No more milkers available');
+            return;
+        }
+    
         if (this.currentMoney < 20) {
             console.log('Not enough money to hire a milker.');
             return;
         }
     
-        let milkerIndex = this.milkers.findIndex(milker => milker === false);
-        if (milkerIndex === -1) {
-            console.log('No free milkers available.');
-            this.btnActionBlue.off('pointertap', this.onBtnActionBlueTap);
-            return;
-        }
+        let milkerIndex = this.availableMilkerIndices.shift();
     
-        this.btnActionBlue.interactive = false;
-        this.btnActionGreen.interactive = false;
+        let milker = this.milkers[milkerIndex].walk;
+        milker.visible = true;
+        milker.play();
     
-        this.milkers[milkerIndex] = true;
         this.decreaseMoneyCounter(20);
+    
         playSound('button', false, 0.5);
         this.hideBtnDairyTutor();
     
-        let milker = this.milkersImage.children[milkerIndex];
-        milker.visible = true;
+        let positionsEnd = [
+            { x: 242, y: -100 }, 
+            { x: 85, y: -8 },  
+            { x: -68, y: 85 }, 
+            { x: -228, y: 180 }
+        ];
     
-        if (this.stalls[milkerIndex] === true) {
-            let cow = this.cowsImage.children[milkerIndex];
-            cow.visible = true;
-            playSound('moo', false, 0.5);
-            gsap.from(cow, 0.5, {delay: 0.3, alpha: 0,  
-                onComplete: () => {
-                    if (!this.milkers.includes(false) && !this.stalls.includes(false)) {
-                        gsap.to(this.btnBoxDairy, 0.5, {alpha: 0, visible: false});
-                        this.moveFromDairyToFactory();
-                    }
-                    this.btnActionBlue.interactive = true;
-                    this.btnActionGreen.interactive = true;
+        let endPosition = positionsEnd[milkerIndex];
+        gsap.to(milker.position, {
+            x: endPosition.x,
+            y: endPosition.y,
+            duration: 2,
+            ease: 'none',
+            onComplete: () => {
+                milker.visible = false;
+                let idle = this.milkers[milkerIndex].idle;
+                idle.position.set(endPosition.x, endPosition.y);
+                idle.visible = true;
+                idle.play(); 
+    
+                if (this.stalls[milkerIndex] === true) {
+                    let cow = this.cowsImage.children[milkerIndex];
+                    cow.visible = true;
+                    playSound('moo', false, 0.5);
+                    gsap.from(cow, 0.5, {
+                        delay: 0.3,
+                        alpha: 0,
+                        onComplete: () => {
+                            this.checkAllCowsVisible();
+                            this.enableButtons();
+                        }
+                    });
+                } else {
+                    this.checkAllCowsVisible();
+                    this.enableButtons();
                 }
-            });
-        } else {
-            this.btnActionBlue.interactive = true;
-            this.btnActionGreen.interactive = true;
-        }
+            }
+        });
     
-        if (!this.milkers.includes(false)) {
+        if (!this.availableMilkerIndices.length) {
             this.btnActionBlue.interactive = false;
             this.btnActionBlue.off('pointertap', this.onBtnActionBlueTap);
             stopSound('button');
         }
     }
-    
+                 
     onBtnActionGreenTap = () => { 
         if (this.currentMoney < 10) {
             console.log('Not enough money to buy a stall.');
@@ -760,9 +821,6 @@ class Main {
             return;
         }
     
-        this.btnActionBlue.interactive = false;
-        this.btnActionGreen.interactive = false;
-    
         this.stalls[stallIndex] = true;
         this.decreaseMoneyCounter(10);
         playSound('button', false, 0.5);
@@ -771,23 +829,20 @@ class Main {
         let stall = this.stallsImage.children[stallIndex];
         stall.visible = true;
     
-        if (this.milkers[stallIndex] === true) {
+        if (this.milkers[stallIndex].walk.visible === false && this.milkers[stallIndex].idle.visible === true) {
             let cow = this.cowsImage.children[stallIndex];
             cow.visible = true;
             playSound('moo', false, 0.5);
-            gsap.from(cow, 0.5, {delay: 0.3, alpha: 0,   
+            gsap.from(cow, 0.5, {
+                delay: 0.3,
+                alpha: 0,
                 onComplete: () => {
-                    if (!this.milkers.includes(false) && !this.stalls.includes(false)) {
-                        gsap.to(this.btnBoxDairy, 0.5, {alpha: 0, visible: false});
-                        this.moveFromDairyToFactory();
-                    }
-                    this.btnActionBlue.interactive = true;
-                    this.btnActionGreen.interactive = true;
+                    this.checkAllCowsVisible();
+                    this.enableButtons();
                 }
             });
         } else {
-            this.btnActionBlue.interactive = true;
-            this.btnActionGreen.interactive = true;
+            this.enableButtons();
         }
     
         if (!this.stalls.includes(false)) {
@@ -795,6 +850,19 @@ class Main {
             this.btnActionGreen.off('pointertap', this.onBtnActionGreenTap);
             stopSound('button');
         }
+    }
+        
+    checkAllCowsVisible = () => {
+        if (this.cowsImage.children.every(cow => cow.visible)) {
+            gsap.to(this.btnBoxDairy, 0.5, {alpha: 0, visible: false});
+            this.moveFromDairyToFactory();
+            stopSound('button');
+        }
+    }
+    
+    enableButtons = () => {
+        this.btnActionBlue.interactive = true;
+        this.btnActionGreen.interactive = true;
     }
 
     onBtnFactoryTap = () => {
@@ -829,6 +897,11 @@ class Main {
                 this.moneyAnimButter.play();
                 playSound('flyingCash', false, 0.5);
 
+                this.prodButter.visible = true
+                gsap.to(this.prodButter, 0.5, { alpha: 1, onStart: () => {  
+                    gsap.to(this.prodButter, 0.8, {y: -225, ease: 'sine.inOut'})} 
+                });
+
                 startMoneyAnimation();
                 gsap.to(this.background.position, 0.7, {x: -210, y: -170, delay: 0.7, ease: 'sine.inOut',
                     onComplete: () => {
@@ -852,6 +925,11 @@ class Main {
                 this.moneyAnimCoffee.play();
                 playSound('flyingCash', false, 0.5);
 
+                this.prodCoffee.visible = true
+                gsap.to(this.prodCoffee, 0.5, { alpha: 1, onStart: () => {  
+                    gsap.to(this.prodCoffee, 0.8, {y: -230, ease: 'sine.inOut'})} 
+                });
+
                 startMoneyAnimation();
                 gsap.to(this.background.position, 0.7, {x: -600, y: -270, delay: 0.7, ease: 'sine.inOut',
                     onComplete: () => {
@@ -868,21 +946,26 @@ class Main {
                 this.decreaseMoneyCounter(70);
                 playSound('build', false, 0.5);
 
-                this.buildAnimCurtard.visible = true;
-                this.buildAnimCurtard.play();
-                this.curtardImage.alpha = 1;
-                this.moneyAnimCurtard.visible = true;
-                this.moneyAnimCurtard.play();
+                this.buildAnimCustard.visible = true;
+                this.buildAnimCustard.play();
+                this.custardImage.alpha = 1;
+                this.moneyAnimCustard.visible = true;
+                this.moneyAnimCustard.play();
                 playSound('flyingCash', false, 0.5);
+
+                this.prodCustard.visible = true
+                gsap.to(this.prodCustard, 0.5, { alpha: 1, onStart: () => {  
+                    gsap.to(this.prodCustard, 0.8, {y: -215, ease: 'sine.inOut'})} 
+                });
 
                 startMoneyAnimation();
                 gsap.to(this.background.position, 0.7, {x: -650, y: 220, delay: 0.7, ease: 'sine.inOut',
                     onComplete: () => {
-                        this.moneyAnimCurtard.visible = false;
+                        this.moneyAnimCustard.visible = false;
                         this.btnBoxFactory.interactive = true;
 
-                        this.buildAnimCurtard.visible = false;
-                        this.buildAnimCurtard.stop();
+                        this.buildAnimCustard.visible = false;
+                        this.buildAnimCustard.stop();
 
                         this.btnBoxFactoryAnimation.play();
                     }
@@ -891,12 +974,17 @@ class Main {
                 this.decreaseMoneyCounter(100);
                 playSound('build', false, 0.5);
 
-                this.buildAnimYogurt.visible = true;
-                this.buildAnimYogurt.play(); 
-                this.yogurtImage.alpha = 1;
+                this.buildAnimYogourt.visible = true;
+                this.buildAnimYogourt.play(); 
+                this.yogourtImage.alpha = 1;
                 this.moneyAnimYogurt.visible = true;
                 this.moneyAnimYogurt.play();
                 playSound('flyingCash', false, 0.5);
+
+                this.prodYogourt.visible = true
+                gsap.to(this.prodYogourt, 0.5, { alpha: 1, onStart: () => {  
+                    gsap.to(this.prodYogourt, 0.8, {y: -260, ease: 'sine.inOut'})} 
+                });
 
                 startMoneyAnimation();
                 gsap.to(this.background.position, 0.7, {x: -1050, y: 120, delay: 0.7, ease: 'sine.inOut',
@@ -904,8 +992,8 @@ class Main {
                         this.moneyAnimYogurt.visible = false;
                         this.btnBoxFactory.interactive = false;
 
-                        this.buildAnimYogurt.visible = false;
-                        this.buildAnimYogurt.stop(); 
+                        this.buildAnimYogourt.visible = false;
+                        this.buildAnimYogourt.stop(); 
 
                         this.btnBoxFactory.off('pointertap', this.onBtnFactoryTap);
                         this.btnBoxFactoryAnimation.play();
@@ -932,7 +1020,7 @@ class Main {
             this.character.display.scale.set( 0.37 );
             this.character.display.position.set( rightUI - 230, downUI - 360 );
 
-            this.speechCaptionPortraite.position.set(0, +50 );
+            this.speechCaptionPortraite.position.set(0, 50 );
             this.speechCaptionLandscape.visible = false;
 
             this.moneyCounterBox.position.set( leftUI + 120, upUI + 50 );
