@@ -240,7 +240,7 @@ class Main {
             milkerIdle.scale.set(0.86);
             milkerIdle.loop = true;
             milkerIdle.visible = false;
-            milkerIdle.animationSpeed = 0.12;
+            milkerIdle.animationSpeed = 0.13;
             this.milkersImage.addChild(milkerIdle);
     
             this.milkers[i] = { walk: milker, idle: milkerIdle };
