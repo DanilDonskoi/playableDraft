@@ -63,7 +63,6 @@ class Main {
         });
     
     }
-    
 
     initStartLayer() {
         this.startScreen = new PIXI.Container();
@@ -238,10 +237,10 @@ class Main {
     
             let milkerIdle = createAnimSprite(assets.textures.pixi["milkerIdle"], milkerIdleSheetData, 'idleFrames');
             milkerIdle.position.set(positions[i].x, positions[i].y);
-            milkerIdle.scale.set(0.85);
-            milkerIdle.loop = false;
+            milkerIdle.scale.set(0.86);
+            milkerIdle.loop = true;
             milkerIdle.visible = false;
-            milkerIdle.animationSpeed = 0.20;
+            milkerIdle.animationSpeed = 0.12;
             this.milkersImage.addChild(milkerIdle);
     
             this.milkers[i] = { walk: milker, idle: milkerIdle };
@@ -267,7 +266,7 @@ class Main {
         this.buildAnimButter.scale.set(1.3);
         this.buildAnimButter.loop = false;
         this.buildAnimButter.visible = false;
-        this.buildAnimButter.play();
+        //this.buildAnimButter.play();
 
         this.moneyAnimButter = createAnimSprite(assets.textures.pixi["moneyNew"], moneyNewSheetData, 'moneyNew' );
         this.butterMachine.addChild( this.moneyAnimButter );
