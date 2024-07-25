@@ -749,6 +749,9 @@ class Main {
             return;
         }
     
+        this.btnActionBlue.interactive = false;
+        this.btnActionGreen.interactive = false;
+    
         let milkerIndex = this.availableMilkerIndices.shift();
     
         let milker = this.milkers[milkerIndex].walk;
@@ -761,9 +764,9 @@ class Main {
         this.hideBtnDairyTutor();
     
         let positionsEnd = [
-            { x: 242, y: -100 }, 
-            { x: 85, y: -8 },  
-            { x: -68, y: 85 }, 
+            { x: 242, y: -100 },
+            { x: 85, y: -8 },
+            { x: -68, y: 85 },
             { x: -228, y: 180 }
         ];
     
@@ -778,22 +781,11 @@ class Main {
                 let idle = this.milkers[milkerIndex].idle;
                 idle.position.set(endPosition.x, endPosition.y);
                 idle.visible = true;
-                idle.play(); 
+                idle.play();
     
                 if (this.stalls[milkerIndex] === true) {
-                    let cow = this.cowsImage.children[milkerIndex];
-                    cow.visible = true;
-                    playSound('moo', false, 0.5);
-                    gsap.from(cow, 0.5, {
-                        delay: 0.3,
-                        alpha: 0,
-                        onComplete: () => {
-                            this.checkAllCowsVisible();
-                            this.enableButtons();
-                        }
-                    });
+                    this.showCow(milkerIndex);
                 } else {
-                    this.checkAllCowsVisible();
                     this.enableButtons();
                 }
             }
@@ -806,11 +798,14 @@ class Main {
         }
     }
                  
-    onBtnActionGreenTap = () => { 
+    onBtnActionGreenTap = () => {
         if (this.currentMoney < 10) {
             console.log('Not enough money to buy a stall.');
             return;
         }
+    
+        this.btnActionGreen.interactive = false;
+        this.btnActionBlue.interactive = false;
     
         let stallIndex = this.stalls.findIndex(stall => stall === false);
         if (stallIndex === -1) {
@@ -829,20 +824,14 @@ class Main {
         stall.visible = true;
     
         if (this.milkers[stallIndex].walk.visible === false && this.milkers[stallIndex].idle.visible === true) {
-            let cow = this.cowsImage.children[stallIndex];
-            cow.visible = true;
-            playSound('moo', false, 0.5);
-            gsap.from(cow, 0.5, {
-                delay: 0.3,
-                alpha: 0,
-                onComplete: () => {
-                    this.checkAllCowsVisible();
-                    this.enableButtons();
-                }
-            });
+            this.showCow(stallIndex);
         } else {
             this.enableButtons();
         }
+    
+        gsap.delayedCall(0.7, () => {
+            this.enableButtons();
+        });
     
         if (!this.stalls.includes(false)) {
             this.btnActionGreen.interactive = false;
@@ -850,18 +839,40 @@ class Main {
             stopSound('button');
         }
     }
+
+    showCow = (milkerIndex) => {
+        let cow = this.cowsImage.children[milkerIndex];
+        cow.visible = true;
+        playSound('moo', false, 0.5);
+        gsap.from(cow, 0.5, {
+            delay: 0.3,
+            alpha: 0,
+            onComplete: () => {
+                this.checkAllCowsVisible();
+            }
+        });
+    }
         
     checkAllCowsVisible = () => {
         if (this.cowsImage.children.every(cow => cow.visible)) {
-            gsap.to(this.btnBoxDairy, 0.5, {alpha: 0, visible: false});
-            this.moveFromDairyToFactory();
+            gsap.to(this.btnBoxDairy, 0.5, { alpha: 0, visible: false });
+            gsap.delayedCall(0.3, () => {
+                this.moveFromDairyToFactory();
+            });
             stopSound('button');
+        } else {
+            this.enableButtons();
         }
     }
     
     enableButtons = () => {
-        this.btnActionBlue.interactive = true;
-        this.btnActionGreen.interactive = true;
+        if (this.cowsImage.children.every(cow => cow.visible)) {
+            this.btnActionBlue.interactive = false;
+            this.btnActionGreen.interactive = false;
+        } else {
+            this.btnActionBlue.interactive = true;
+            this.btnActionGreen.interactive = true;
+        }
     }
 
     onBtnFactoryTap = () => {
